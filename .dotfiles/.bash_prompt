@@ -1,0 +1,72 @@
+# Makes the command line nicer
+# Final output:
+# user@host:~ [(branch)] ❯ ping google.com
+
+parse_git_branch () 
+{ 
+    local OUT=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`;
+    if [ "$OUT" != "" ]; then
+        echo " $OUT";
+    fi
+}
+
+_bash_prompt_config() {
+    # Prompt variables
+    P_GREEN=$'\\[\E[92m\\]'
+    P_HOST=$'\\[\E[36m\\]\\h'
+    P_RED=$'\\[\E[31m\\]'
+    P_RESET=$'\\[\E(B\E[m\\]'
+    P_USER=$'\\[\E[92m\\]\\u'
+    P_WHITE=$'\\[\E[37m\\]'
+    P_YELLOW=$'\\[\E[33m\\]'
+}
+
+bash_prompt_command () 
+{ 
+    local P_EXIT="";
+    local MAXLENGTH=35;
+    local TRUNC_SYMBOL="..";
+    local DIR=${PWD##*/};
+    local P_PWD=${PWD/#$HOME/\~};
+    MAXLENGTH=$(( ( MAXLENGTH < ${#DIR} ) ? ${#DIR} : MAXLENGTH ));
+    local OFFSET=$(( ${#P_PWD} - MAXLENGTH ));
+    if [ ${OFFSET} -gt "0" ]; then
+        P_PWD=${P_PWD:$OFFSET:$MAXLENGTH};
+        P_PWD=${TRUNC_SYMBOL}/${P_PWD#*/};
+    fi;
+    if [[ $TERM == xterm* ]]; then
+        echo -ne "\033]0;${P_PWD}\007";
+    fi;
+
+    # Parse Git branch name
+    P_GIT=$(parse_git_branch);
+
+    PS1="${P_EXIT}${P_USER}${P_WHITE}@${P_HOST}${P_WHITE}:${P_YELLOW}${P_PWD}${P_GREEN}${P_GIT}${P_YELLOW} ❯ ${P_RESET}"
+}
+
+_bash_prompt_config
+unset _bash_prompt_config
+
+if $SHELL_BASH; then
+    # You're here now, bro.
+    PROMPT_COMMAND=bash_prompt_command
+else
+    # Assume zsh
+    function precmd {
+        bash_prompt_command
+    }
+fi
+
+# Highlight the user name when logged in as root.
+if [[ "${USER}" == "root" ]]; then
+    userStyle="${red}";
+else
+    userStyle="${orange}";
+fi;
+
+# Highlight the hostname when connected via SSH.
+if [[ "${SSH_TTY}" ]]; then
+    hostStyle="${bold}${red}";
+else
+    hostStyle="${yellow}";
+fi;

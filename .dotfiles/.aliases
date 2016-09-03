@@ -1,0 +1,46 @@
+# Reload bash
+alias reload='source ~/.bash_profile'
+
+# List all files in colorized, long format
+alias l='$(which ls)' # Works if other ls installed
+alias ll='l -lAh'
+alias ls='echo Use l or the full path i.e. $(which ls)'
+
+# Easier navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+
+# Cd to common dirs
+alias cdif='cd ~/Documents/if'
+alias cdc='cd ~/Documents/coding'
+
+# Applications
+alias scp='scp -r' # Copy dirs too when scp
+alias v='/usr/bin/vim'
+alias vim='echo Use v or the full path i.e. $(which vim)'
+alias weather='curl -4 wttr.in/$CURRENT_TOWN' # Set yours!
+
+# Git commands
+alias gfr='git fetch && git rebase -i origin/master'
+alias gl='git log --all --graph --decorate --oneline'
+alias gs='git status'
+
+# Pew commands
+alias ptog='pew toggleglobalsitepackages'
+alias pls='pew lssitepackages'
+
+# Enable aliases to be sudo’ed
+alias sudo='sudo '
+
+# Trash utilities
+# Recursively delete `.DS_Store` files
+alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
+
+# Empty the Trash on all mounted volumes and the main HDD.
+# Also, clear Apple’s System Logs to improve shell startup speed.
+# Finally, clear download history from quarantine. https://mths.be/bum
+alias empty="sudo /bin/rm -rfv /Volumes/*/.Trashes; sudo /bin/rm -rfv ~/.Trash; sudo /bin/rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
+
+# Forbid rm use, encourage del command
+alias rm='echo Use del or the the full path i.e. \/bin\/rm'
+alias del='trash'

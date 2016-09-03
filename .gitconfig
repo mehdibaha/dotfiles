@@ -1,0 +1,8 @@
+[user]
+	name = mehdibaha
+	email = elmehdi.baha@gmail.com
+[push]
+	default = simple
+[alias]
+	pl = pull
+	ps = push
