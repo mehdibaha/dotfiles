@@ -6,9 +6,3 @@ for file in ~/.dotfiles/.{path,bash_prompt,exports,aliases,functions}; do
     [ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;
-
-# Git completion
-[ -f ~/.dotfiles/.git-completion.bash ] && . ~/.dotfiles/.git-completion.bash
-
-# added by Pew
-source $(pew shell_config)
