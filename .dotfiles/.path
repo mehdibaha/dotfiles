@@ -1,1 +1,5 @@
+# Extending path for coreutils, local/sbin...
 export PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/sbin:$PATH"
+
+# Setting current town for 'weather' command
+export CURRENT_TOWN=Lyon
