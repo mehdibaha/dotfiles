@@ -1,6 +1,6 @@
 [user]
-	name = $GIT_AUTHOR_NAME
-	email = $GIT_AUTHOR_EMAIL
+	name = Mehdi BAHA
+	email = elmehdi.baha@gmail.com
 [push]
 	default = simple
 [alias]
