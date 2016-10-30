@@ -9,9 +9,10 @@ alias ls='echo Use l or the full path i.e. $(which ls)'
 # Easier navigation
 alias ..='cd ..'
 alias ...='cd ../..'
+alias ....='cd ../../..'
 
-# Cd to common dirs
-alias cdif='cd ~/Documents/if'
+# Cd to personalized dirs
+alias cdif='cd ~/Documents/if/4if'
 alias cdc='cd ~/Documents/coding'
 
 # Applications
