@@ -46,13 +46,14 @@ s ()
 #   Remco Verhoef <remco@dutchcoders.io>
 #
 
-curl --version 2>&1 > /dev/null
-if [ $? -ne 0 ]; then
-  echo "Could not find curl."
-  return 1
-fi
+transfer() {
+    # check curl
+    curl --version 2>&1 > /dev/null
+    if [ $? -ne 0 ]; then
+        echo "Could not find curl."
+        return 1
+    fi
 
-transfer() { 
     # check arguments
     if [ $# -eq 0 ]; 
     then 
