@@ -98,3 +98,7 @@ transfer() {
     # cleanup
     /bin/rm -f $tmpfile
 }
+
+sman() {
+    man "${1}" | col -b | subl
+}

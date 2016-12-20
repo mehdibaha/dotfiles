@@ -14,16 +14,16 @@ alias ....='cd ../../..'
 # Cd to personalized dirs
 alias cdif='cd ~/Documents/if/4if'
 alias cdc='cd ~/Documents/coding'
+alias cdp='cd ~/Documents/eclipse-workspace/pld-agile'
 
 # Applications
 alias scp='scp -r' # Copy dirs too when scp
 alias v='/usr/bin/vim'
 alias vim='echo Use v or the full path i.e. $(which vim)'
-alias weather='curl -4 wttr.in/$CURRENT_TOWN' # Set yours!
 
 # Git commands
 alias gfr='git fetch && git rebase -i origin/master'
-alias gl='git log --all --graph --decorate --oneline'
+alias gl='git log --all --graph --decorate --oneline --first-parent'
 alias gs='git status'
 alias gc='git commit'
 alias ga='git add'
