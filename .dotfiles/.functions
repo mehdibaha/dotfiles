@@ -27,19 +27,6 @@ o ()
 }
 
 #
-# Open with sublime file or dir
-#
-
-s () 
-{ 
-    if [ $# -eq 0 ]; then
-        subl .;
-    else
-        subl "$@";
-    fi
-}
-
-#
 # Defines transfer alias and provides easy command line file and folder sharing.
 #
 # Authors:

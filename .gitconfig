@@ -6,3 +6,5 @@
 [alias]
 	pl = pull
 	ps = push
+[credential]
+	halper = osxkeychain
