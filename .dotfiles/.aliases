@@ -20,13 +20,14 @@ alias cdf='cd ~/Documents/coding/forum'
 alias scp='scp -r' # Copy dirs too when scp
 alias v='/usr/bin/vim'
 alias vim='echo Use v or the full path i.e. $(which vim)'
-alias s='atom'
+alias s='subl'
 
 # Heroku stuff
 alias env='source bin/activate'
 alias mdb='sudo mongod'
 alias dev='heroku local:run python runserver.py'
-alias deploy='git push origin master:master; git push origin master:production'
+alias deploy='git push; git push origin master:production'
+alias assets='heroku local:run python manage.py assets'
 
 # Git commands
 alias gfr='git fetch && git rebase -i origin/master'
@@ -34,6 +35,7 @@ alias gl='git log --all --graph --decorate --oneline --first-parent'
 alias gs='git status'
 alias gc='git commit'
 alias ga='git add'
+alias gd='git diff'
 
 # Enable aliases to be sudo’ed
 alias sudo='sudo '

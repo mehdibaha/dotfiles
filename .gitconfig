@@ -7,4 +7,6 @@
 	pl = pull
 	ps = push
 [credential]
-	halper = osxkeychain
+	helper = osxkeychain
+[pull]
+	rebase = true
