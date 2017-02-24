@@ -23,7 +23,7 @@ alias vim='echo Use v or the full path i.e. $(which vim)'
 alias s='subl'
 
 # Heroku stuff
-alias env='source bin/activate'
+alias env='source env/bin/activate'
 alias mdb='sudo mongod'
 alias dev='heroku local:run python runserver.py'
 alias deploy='git push; git push origin master:production'
