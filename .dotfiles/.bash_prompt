@@ -1,9 +1,9 @@
 # Makes the command line nicer
 # Final output:
-# user@host:~ [(branch)] ❯ ping google.com
+# [(env)] user@host:~ [(branch)] ❯ ping google.com
 
-parse_git_branch () 
-{ 
+parse_git_branch ()
+{
     local OUT=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`;
     if [ "$OUT" != "" ]; then
         echo " $OUT";
@@ -21,10 +21,10 @@ _bash_prompt_config() {
     P_YELLOW=$'\\[\E[33m\\]'
 }
 
-bash_prompt_command () 
-{ 
+bash_prompt_command ()
+{
     local P_EXIT="";
-    local MAXLENGTH=35;
+    local MAXLENGTH=20;
     local TRUNC_SYMBOL="..";
     local DIR=${PWD##*/};
     local P_PWD=${PWD/#$HOME/\~};
@@ -41,7 +41,13 @@ bash_prompt_command ()
     # Parse Git branch name
     P_GIT=$(parse_git_branch);
 
-    PS1="${P_EXIT}${P_USER}${P_WHITE}@${P_HOST}${P_WHITE}:${P_YELLOW}${P_PWD}${P_GREEN}${P_GIT}${P_YELLOW} ❯ ${P_RESET}"
+    # Parse Virtual Env
+    if test -z "$VIRTUAL_ENV" ; then
+        P_VENV="";
+    else
+        P_VENV="(`basename \"$VIRTUAL_ENV\"`) ";
+    fi
+    PS1="$P_VENV${P_EXIT}${P_USER}${P_WHITE}@${P_HOST}${P_WHITE}:${P_YELLOW}${P_PWD}${P_GREEN}${P_GIT}${P_YELLOW} ❯ ${P_RESET}"
 }
 
 _bash_prompt_config
@@ -56,17 +62,3 @@ else
         bash_prompt_command
     }
 fi
-
-# Highlight the user name when logged in as root.
-if [[ "${USER}" == "root" ]]; then
-    userStyle="${red}";
-else
-    userStyle="${orange}";
-fi;
-
-# Highlight the hostname when connected via SSH.
-if [[ "${SSH_TTY}" ]]; then
-    hostStyle="${bold}${red}";
-else
-    hostStyle="${yellow}";
-fi;

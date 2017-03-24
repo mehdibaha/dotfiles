@@ -2,9 +2,9 @@
 alias reload='source ~/.bash_profile'
 
 # List all files in colorized, long format
-alias l='$(which ls)' # Works if other ls installed
-alias ll='l -lAh'
-alias ls='echo Use l or the full path i.e. $(which ls)'
+alias l='$(which ls) -lAh --color --group-directories-first' # Works if other ls installed
+alias ll='echo Use l or the full path i.e. $(which ls)'
+alias ls='$(which ls)'
 
 # Easier navigation
 alias ..='cd ..'
@@ -21,12 +21,15 @@ alias scp='scp -r' # Copy dirs too when scp
 alias v='/usr/bin/vim'
 alias vim='echo Use v or the full path i.e. $(which vim)'
 alias s='subl'
+alias python='python3'
+alias pip='pip3'
+alias venv='python -m venv'
 
 # Heroku stuff
 alias env='source env/bin/activate'
-alias mdb='sudo mongod'
+alias mdb='sudo mongod -f /etc/mongodb.conf'
 alias dev='heroku local:run python runserver.py'
-alias deploy='git push; git push origin master:production'
+alias deploy='heroku pipelines:promote -r staging'
 alias assets='heroku local:run python manage.py assets'
 
 # Git commands
