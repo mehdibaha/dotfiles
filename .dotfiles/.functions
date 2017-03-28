@@ -33,7 +33,7 @@ o ()
 #   Remco Verhoef <remco@dutchcoders.io>
 #
 
-transfer() {
+up() {
     # check curl
     curl --version 2>&1 > /dev/null
     if [ $? -ne 0 ]; then
@@ -81,7 +81,8 @@ transfer() {
     fi
    
     # cat output link
-    cat $tmpfile
+    cat $tmpfile | pbcopy
+    echo "File has been copied to your clipboard :)"
 
     # cleanup
     /bin/rm -f $tmpfile
