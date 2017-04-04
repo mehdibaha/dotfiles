@@ -12,9 +12,8 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 
 # Cd to personalized dirs
-alias cdif='cd ~/Documents/studies/4if'
+alias cdif='cd ~/Documents/if/4if'
 alias cdc='cd ~/Documents/coding'
-alias cdf='cd ~/Documents/coding/forum'
 
 # Applications
 alias scp='scp -r' # Copy dirs too when scp
@@ -25,6 +24,7 @@ alias python='python3'
 alias pip='pip3'
 alias venv='python -m venv'
 alias free='python ~/.dotfiles/free.py'
+alias cat='pygmentize -O style=monokai -f console256 -g'
 
 # Heroku stuff
 alias env='source env/bin/activate'
@@ -32,14 +32,20 @@ alias mdb='sudo mongod -f /etc/mongodb.conf'
 alias dev='heroku local:run python runserver.py'
 alias deploy='heroku pipelines:promote -r staging'
 alias assets='heroku local:run python manage.py assets'
+alias her='heroku'
+alias update='pybabel extract -F babel.cfg -o messages.pot . && pybabel update -i messages.pot -d translations'
+alias compile='pybabel compile -d translations'
 
 # Git commands
 alias gfr='git fetch && git rebase -i origin/master'
 alias gl='git log --all --graph --decorate --oneline --first-parent'
-alias gs='git status'
+alias gs='git status -sb'
 alias gc='git commit'
 alias ga='git add'
 alias gd='git diff'
+alias gps='git push'
+alias gch='git checkout'
+alias gb='git branch'
 
 # Enable aliases to be sudo’ed
 alias sudo='sudo '

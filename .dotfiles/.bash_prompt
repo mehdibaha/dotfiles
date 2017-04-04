@@ -24,7 +24,7 @@ _bash_prompt_config() {
 bash_prompt_command ()
 {
     local P_EXIT="";
-    local MAXLENGTH=20;
+    local MAXLENGTH=50;
     local TRUNC_SYMBOL="..";
     local DIR=${PWD##*/};
     local P_PWD=${PWD/#$HOME/\~};
@@ -47,7 +47,7 @@ bash_prompt_command ()
     else
         P_VENV="(`basename \"$VIRTUAL_ENV\"`) ";
     fi
-    PS1="$P_VENV${P_EXIT}${P_USER}${P_WHITE}@${P_HOST}${P_WHITE}:${P_YELLOW}${P_PWD}${P_GREEN}${P_GIT}${P_YELLOW} ❯ ${P_RESET}"
+    PS1="$P_VENV${P_EXIT}${P_USER}${P_WHITE}@${P_HOST}${P_WHITE}:${P_YELLOW}${P_PWD}${P_GREEN}${P_GIT}${P_YELLOW}\n${P_RESET}$ "
 }
 
 _bash_prompt_config
