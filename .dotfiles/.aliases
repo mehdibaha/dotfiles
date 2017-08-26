@@ -32,7 +32,9 @@ alias dev='heroku local:run python runserver.py'
 alias deploy='heroku pipelines:promote -r staging'
 alias assets='heroku local:run python manage.py assets'
 alias her='heroku'
-alias update='pybabel extract -F babel.cfg -o messages.pot . && pybabel update -i messages.pot -d translations'
+alias init='pybabel init -i messages.pot -d translations -l en && pybabel init -i messages.pot -d translations -l fr'
+alias update='pybabel extract -F babel.cfg -o messages.pot .'
+alias merge='pybabel update -i messages.pot -d translations'
 alias compile='pybabel compile -d translations'
 
 # Git commands

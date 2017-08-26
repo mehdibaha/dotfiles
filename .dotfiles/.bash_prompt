@@ -1,6 +1,7 @@
 # Makes the command line nicer
-# Final output:
-# [(env)] user@host:~ [(branch)] ❯ ping google.com
+# Example look:
+# [(env)] user@host:~ [branch]
+# ping google.com
 
 parse_git_branch ()
 {

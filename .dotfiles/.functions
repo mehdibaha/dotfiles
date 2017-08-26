@@ -10,7 +10,7 @@ mkd ()
 # cd then list dir
 #
 function cd {
-    builtin cd "$@"; l
+    builtin cd "$@"; ls
 }
 
 #
