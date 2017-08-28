@@ -12,30 +12,34 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 
 # Cd to personalized dirs
-alias cdif='cd ~/Documents/if/4if'
 alias cdc='cd ~/Documents/coding'
 
 # Applications
 alias scp='scp -r' # Copy dirs too when scp
 alias v='/usr/bin/vim'
 alias vim='echo Use v or the full path i.e. $(which vim)'
+alias vi='echo Use v or the full path i.e. $(which vi)'
 alias s='subl'
 alias python='python3'
 alias pip='pip3'
 alias venv='python -m venv'
 alias free='python ~/.dotfiles/free.py'
+alias cc='pbcopy' # Ctrl-C
+alias cv='pbpaste' # Ctrl-V
+
 
 # Heroku stuff
 alias env='source env/bin/activate'
 alias mdb='sudo mongod -f /etc/mongodb.conf'
-alias dev='heroku local:run python runserver.py'
-alias deploy='heroku pipelines:promote -r staging'
-alias assets='heroku local:run python manage.py assets'
-alias her='heroku'
-alias init='pybabel init -i messages.pot -d translations -l en && pybabel init -i messages.pot -d translations -l fr'
-alias update='pybabel extract -F babel.cfg -o messages.pot .'
-alias merge='pybabel update -i messages.pot -d translations'
-alias compile='pybabel compile -d translations'
+alias h='heroku'
+alias hrun='h local:run'
+alias hdep='h pipelines:promote -r staging'
+alias hserve='hrun python runserver.py'
+alias hassets='hrun python manage.py assets'
+alias binit='pybabel init -i messages.pot -d translations -l en && pybabel init -i messages.pot -d translations -l fr'
+alias bupdate='pybabel extract -F babel.cfg -o messages.pot .'
+alias bmerge='pybabel update -i messages.pot -d translations'
+alias bcompile='pybabel compile -d translations'
 
 # Git commands
 alias gfr='git fetch && git rebase -i origin/master'
@@ -43,9 +47,7 @@ alias gl='git log --all --graph --decorate --oneline --first-parent'
 alias gs='git status -sb'
 alias gc='git commit -m'
 alias ga='git add'
-alias gaa='git add .'
 alias gd='git diff'
-alias gps='git push'
 alias gch='git checkout'
 alias gb='git branch'
 
