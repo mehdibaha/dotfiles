@@ -20,6 +20,8 @@ _bash_prompt_config() {
     P_USER=$'\\[\E[92m\\]\\u'
     P_WHITE=$'\\[\E[37m\\]'
     P_YELLOW=$'\\[\E[33m\\]'
+    P_AT=$'@'
+    P_DOT=$':'
 }
 
 bash_prompt_command ()
@@ -42,13 +44,13 @@ bash_prompt_command ()
     # Parse Git branch name
     P_GIT=$(parse_git_branch);
 
-    # Parse Virtual Env
-    if test -z "$VIRTUAL_ENV" ; then
-        P_VENV="";
-    else
+    # Parse Virtual Env && Conda
+    P_VENV="";
+    if test -n "$VIRTUAL_ENV" ; then
         P_VENV="(`basename \"$VIRTUAL_ENV\"`) ";
-    fi
-    PS1="$P_VENV${P_EXIT}${P_USER}${P_WHITE}@${P_HOST}${P_WHITE}:${P_YELLOW}${P_PWD}${P_GREEN}${P_GIT}${P_YELLOW}\n${P_RESET}$ "
+    fi;
+
+    PS1="${P_VENV}${P_EXIT}${P_USER}${P_WHITE}${P_AT}${P_HOST}${P_WHITE}${P_DOT}${P_YELLOW}${P_PWD}${P_GREEN}${P_GIT}${P_YELLOW}\n${P_RESET}$ "
 }
 
 _bash_prompt_config

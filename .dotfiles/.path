@@ -1,5 +1,3 @@
 # Extending path for coreutils, local/sbin, rust
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
-# added by Miniconda3 4.3.21 installer
-export PATH="/Users/mehdib/.miniconda/bin:$PATH"
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
