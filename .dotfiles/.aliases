@@ -13,8 +13,10 @@ alias ....='cd ../../..'
 
 # Cd to personalized dirs
 alias cdc='cd ~/Documents/coding'
+alias kth='cd ~/Documents/kth'
 
 # Applications
+alias cat='ccat'
 alias scp='scp -r' # Copy dirs too when scp
 alias v='/usr/bin/vim'
 alias vim='echo Use v or the full path i.e. $(which vim)'
@@ -22,7 +24,7 @@ alias vi='echo Use v or the full path i.e. $(which vi)'
 alias s='subl'
 alias python='python3'
 alias pip='pip3'
-alias venv='py -m venv env'
+alias venv='python -m venv env'
 alias env='source env/bin/activate'
 alias free='python ~/.dotfiles/free.py'
 alias cc='pbcopy' # Ctrl-C
@@ -49,6 +51,7 @@ alias ga='git add'
 alias gd='git diff'
 alias gch='git checkout'
 alias gb='git branch'
+alias ghb='git clone $(pbpaste)'
 
 # Enable aliases to be sudo’ed
 alias sudo='sudo '

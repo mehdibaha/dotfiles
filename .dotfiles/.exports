@@ -9,3 +9,11 @@ export LANG='en_US.UTF-8';
 # Don’t clear the screen after quitting a manual page.
 export MANPAGER='less -X';
 
+# ignore duplicate commands, ignore commands starting with a space
+export HISTCONTROL=erasedups:ignorespace
+
+# keep the last 5000 entries
+export HISTSIZE=5000
+
+# append to the history instead of overwriting (good for multiple connections)
+shopt -s histappend

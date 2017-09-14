@@ -10,3 +10,5 @@
 	helper = osxkeychain
 [pull]
 	rebase = true
+[core]
+	excludesfile = $HOME/.gitignore_global
