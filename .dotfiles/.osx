@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# ~/.osx — https://mths.be/osx
-
 sudo -v
 
 COMPUTER_NAME="Mehdi's Air"
@@ -9,81 +7,81 @@ HOSTNAME="Mehdis-Air"
 BREW_KEGS=(caskroom/cask heroku/brew)
 BREW_RECIPES=(bash mas coreutils git git-extras tree wget heroku/brew/heroku mongodb node openssl python python3 trash youtube-dl)
 BREW_CASKS=(google-chrome spectacle skype vlc docker the-unarchiver sublime-text)
+MAC_APPS=(1176895641 410628904) # (Spark, Wunderlist)
 
-###############################################################################
-# XCode                                                                       #
-###############################################################################
-echo '--Installation--'
+###########################
+##### XCode
+###########################
+echo '--XCode--'
 
-echo 'Install XCode'
+echo 'Install XCode...'
 if [[ ! -d "$('xcode-select' -print-path 2>/dev/null)" ]]; then
   sudo xcode-select -switch /usr/bin
 fi
 
-###############################################################################
-# Homebrew                                                                    #
-###############################################################################
+###########################
+##### Homebrew
+###########################
+echo ''
+echo '--Homebrew--'
 
-# Install Homebrew.
-echo 'Install Homebrew'
+echo 'Install Homebrew...'
 if [[ ! "$(type -P brew)" ]]; then
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
-echo 'Update Homebrew'
-brew update
-echo 'Upgrade Homebrew'
-brew upgrade
+echo 'Update/Upgrade Homebrew...'
+brew update && brew upgrade
 
 echo 'Install kegs'
 for keg in "${BREW_KEGS[@]}"; do
-  brew tap $keg
+    echo "    Tap $keg..."
+    brew tap $keg
 done
 
-echo 'Install recipes'
+echo 'Install recipes...'
 for recipe in "${BREW_RECIPES[@]}"; do
-    echo "Install $recipe"
+    echo "    Install $recipe..."
     brew install $recipe
 done
 
-echo 'Install cask recipes'
-brew cask info this-is-somewhat-annoying 2> /dev/null # password hack
+echo 'Update/Upgrade/Doctor Homebrew...'
+brew update && brew upgrade && brew doctor &>> .osx.doctor
 
-# Check if .app exists
-# input: sublime-text, docker -> output: true, false
-_app_exists() {
-    local app=$(cut -d '-' -f 1 <<< "$1")
-    if [[ ! "$(find /Applications -maxdepth 2 | grep -i $app)" ]]; then
-        echo false
-        return 1
-    fi
-    echo true
-}
+###########################
+##### Homebrew Cask
+###########################
+echo ''
+echo '--Homebrew Cask--'
+
+echo 'Install cask recipes...'
+brew cask info this-is-somewhat-annoying 2> /dev/null
 
 for cask in "${BREW_CASKS[@]}"; do
-    if [[ $(_app_exists $cask) == false ]]; then
-        echo "Install $cask"
+    cask=$(cut -d '-' -f 1 <<< "$cask")
+    if [[ ! "$(find /Applications -maxdepth 2 | grep -i $cask)" ]]; then
+        echo "    Install $cask..."
         brew cask install $cask
     fi
 done
 
-unset _app_exists
+echo 'Cleanup/Doctor Homebrew Cask...'
+brew cask cleanup && brew cask doctor &>> .osx.doctor
 
-echo 'Clean up Homebrew Cask'
-brew cask cleanup &> /dev/null
+###########################
+##### MacOS Apps
+###########################
+echo ''
+echo '--MacOS Apps--'
 
-echo 'Install Wunderlist'
-mas install 410628904
+echo 'Install MacOS Apps'
+for app in "${MAC_APPS[@]}"; do
+    echo "    Install $app"
+    mas install $app
+done
 
-echo 'Install Spark'
-mas install 1176895641
-
-echo 'Update Homebrew'
-brew update
-echo 'Upgrade Homebrew'
-brew upgrade
-echo 'Doctor Homebrew'
-brew doctor
+echo 'Upgrade MacOS apps'
+mas upgrade
 
 ###############################################################################
 # General UI/UX                                                               #
@@ -91,9 +89,9 @@ brew doctor
 echo ''
 echo '--General UI/UX--'
 
-echo 'Set computer name to $COMPUTER_NAME...'
+echo "Set computer name to $COMPUTER_NAME..."
 sudo scutil --set ComputerName $COMPUTER_NAME
-echo 'Set host name to $HOSTNAME...'
+echo "Set host name to $HOSTNAME..."
 sudo scutil --set HostName $HOSTNAME
 sudo scutil --set LocalHostName $HOSTNAME
 
@@ -107,17 +105,17 @@ echo 'Expand save panel by default...'
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
 
-echo 'Expand print panel by default'
+echo 'Expand print panel by default...'
 defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
 defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
 
-echo 'Remove duplicates in the “Open With” menu'
+echo 'Remove duplicates in the “Open With” menu...'
 /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user
 
-echo 'Disable Resume system-wide'
+echo 'Disable Resume system-wide...'
 defaults write com.apple.systempreferences NSQuitAlwaysKeepsWindows -bool false
 
-echo 'Enable automatic termination of inactive apps'
+echo 'Enable automatic termination of inactive apps...'
 defaults write NSGlobalDomain NSDisableAutomaticTermination -bool false
 
 ###############################################################################
@@ -133,7 +131,7 @@ echo 'Remove the sleep image file to save disk space...'
 sudo rm /private/var/vm/sleepimage
 echo '  Create a zero-byte file instead...'
 sudo touch /private/var/vm/sleepimage
-echo '  Making sure it can’t be rewritten'
+echo '  Making sure it can’t be rewritten...'
 sudo chflags uchg /private/var/vm/sleepimage
 
 echo 'Disable the sudden motion sensor...'
@@ -146,18 +144,18 @@ sudo pmset -a sms 0
 echo ''
 echo '--Trackpad, mouse, keyboard, Bluetooth accessories, and input--'
 
-echo 'Enable tap to click for this user and for the login screen'
+echo 'Enable tap to click for this user and for the login screen...'
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
-echo 'Disable press-and-hold for keys in favor of key repeat'
+echo 'Disable press-and-hold for keys in favor of key repeat...'
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
-echo 'Set a blazingly fast keyboard repeat rate'
+echo 'Set a blazingly fast keyboard repeat rate...'
 defaults write NSGlobalDomain KeyRepeat -int 0
 
-echo 'Stop iTunes from responding to the keyboard media keys'
+echo 'Stop iTunes from responding to the keyboard media keys...'
 launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null
 
 ###############################################################################
@@ -166,10 +164,10 @@ launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/nul
 echo ''
 echo '--Finder--'
 
-echo 'Save screenshots in PNG format'
+echo 'Save screenshots in PNG format...'
 defaults write com.apple.screencapture type -string "png"
 
-echo 'Disable shadow in screenshots'
+echo 'Disable shadow in screenshots...'
 defaults write com.apple.screencapture disable-shadow -bool true
 
 ###############################################################################
@@ -178,52 +176,52 @@ defaults write com.apple.screencapture disable-shadow -bool true
 echo ''
 echo '--Finder--'
 
-echo 'Allow quitting via ⌘ + Q; doing so will also hide desktop icons'
+echo 'Allow quitting via ⌘ + Q; doing so will also hide desktop icons...'
 defaults write com.apple.finder QuitMenuItem -bool false
 
-echo 'Disable window animations and Get Info animations'
+echo 'Disable window animations and Get Info animations...'
 defaults write com.apple.finder DisableAllAnimations -bool true
 
-echo 'Show icons for hard drives, servers, and removable media on the desktop'
+echo 'Show icons for hard drives, servers, and removable media on the desktop...'
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
 defaults write com.apple.finder ShowHardDrivesOnDesktop -bool false
 defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
 defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
 
-echo 'Show all filename extensions'
+echo 'Show all filename extensions...'
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 
-echo 'Show status bar'
+echo 'Show status bar...'
 defaults write com.apple.finder ShowStatusBar -bool false
 
-echo 'Show path bar'
+echo 'Show path bar...'
 defaults write com.apple.finder ShowPathbar -bool true
 
-echo 'Enable full POSIX path as Finder window title'
+echo 'Enable full POSIX path as Finder window title...'
 defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 
-echo 'Disable the warning when changing a file extension'
+echo 'Disable the warning when changing a file extension...'
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
-echo 'Enable spring loading for directories'
+echo 'Enable spring loading for directories...'
 defaults write NSGlobalDomain com.apple.springing.enabled -bool true
 
-echo 'Remove the spring loading delay for directories'
+echo 'Remove the spring loading delay for directories...'
 defaults write NSGlobalDomain com.apple.springing.delay -float 0
 
-echo 'Avoiding create .DS_Store files on network volumes'
+echo 'Avoiding create .DS_Store files on network volumes...'
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 
-echo 'Automatically open a new Finder window when a volume is mounted'
+echo 'Automatically open a new Finder window when a volume is mounted...'
 defaults write com.apple.frameworks.diskimages auto-open-ro-root -bool true
 defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
 defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
 
 # Four-letter codes for the other view modes: `icnv`, `clmv`, `Flwv`
-echo 'Use list view in all Finder windows by default'
+echo 'Use list view in all Finder windows by default...'
 defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 
-echo 'Expand General, Open with, Sharing & Permissions'
+echo 'Expand General, Open with, Sharing & Permissions...'
 defaults write com.apple.finder FXInfoPanesExpanded -dict \
     General -bool true \
     OpenWith -bool true \
@@ -235,32 +233,32 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict \
 echo ''
 echo '--Dock, Dashboard, and hot corners--'
 
-echo 'Minimize windows into their applications icon'
+echo 'Minimize windows into their applications icon...'
 defaults write com.apple.dock minimize-to-application -bool true
 
-echo 'Enable spring loading for all Dock items'
+echo 'Enable spring loading for all Dock items...'
 defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool true
 
-echo 'Show indicator lights for open applications in the Dock'
+echo 'Show indicator lights for open applications in the Dock...'
 defaults write com.apple.dock show-process-indicators -bool true
 
-echo 'Speed up Mission Control animations'
+echo 'Speed up Mission Control animations...'
 defaults write com.apple.dock expose-animation-duration -float 0
 
-echo 'Dont group windows by application in Mission Control'
+echo 'Dont group windows by application in Mission Control...'
 # (i.e. use the old Exposé behavior instead)
 defaults write com.apple.dock expose-group-by-app -bool true
 
-echo 'Disable Dashboard'
+echo 'Disable Dashboard...'
 defaults write com.apple.dashboard mcx-disabled -bool true
 
-echo 'Dont show Dashboard as a Space'
+echo 'Dont show Dashboard as a Space...'
 defaults write com.apple.dock dashboard-in-overlay -bool true
 
-echo 'Dont automatically rearrange Spaces based on most recent use'
+echo 'Dont automatically rearrange Spaces based on most recent use...'
 defaults write com.apple.dock mru-spaces -bool false
 
-echo 'Make Dock icons of hidden applications translucent'
+echo 'Make Dock icons of hidden applications translucent...'
 defaults write com.apple.dock showhidden -bool true
 
 ###############################################################################
@@ -269,11 +267,10 @@ defaults write com.apple.dock showhidden -bool true
 echo ''
 echo '--Spotlight--'
 
-echo 'Hide Spotlight tray-icon and subsequent helper'
+echo 'Hide Spotlight tray-icon and subsequent helper...'
 sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search
 
-echo 'Disable Spotlight indexing for any volume that gets mounted and has not yet'
-# been indexed before.
+echo 'Disable Spotlight indexing for never undexed volumes...'
 sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
 
 ###############################################################################
@@ -282,7 +279,7 @@ sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Vol
 echo ''
 echo '--Terminal--'
 
-echo 'Set UTF-8 in Terminal.app'
+echo 'Set UTF-8 in Terminal.app...'
 defaults write com.apple.terminal StringEncodings -array 4
 
 ###############################################################################
@@ -291,7 +288,7 @@ defaults write com.apple.terminal StringEncodings -array 4
 echo ''
 echo '--Time Machine--'
 
-echo 'Disable local Time Machine backups'
+echo 'Disable local Time Machine backups...'
 hash tmutil &> /dev/null && sudo tmutil disablelocal
 
 ###############################################################################
@@ -299,4 +296,5 @@ hash tmutil &> /dev/null && sudo tmutil disablelocal
 ###############################################################################
 echo ''
 echo 'Done!'
+echo 'Doctor analysis generated in .osx.doctor'
 echo 'For all changes to be taken into account, please restart your Mac.'
