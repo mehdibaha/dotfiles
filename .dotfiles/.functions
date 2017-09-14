@@ -19,17 +19,6 @@ o ()
     fi
 }
 
-# Check if .app exists
-# input: sublime-text, docker -> output: true, false
-_app_exists() {
-    local app=$(cut -d '-' -f 1 <<< "$1")
-    if [[ ! "$(find /Applications -maxdepth 2 | grep -i $app)" ]]; then
-        echo false
-        return 1
-    fi
-    echo true
-}
-
 # Defines transfer alias and provides easy command line file and folder sharing.
 transfer() {
     # check curl

@@ -2,6 +2,8 @@
 
 # ~/.osx — https://mths.be/osx
 
+sudo -v
+
 COMPUTER_NAME="Mehdi's Air"
 HOSTNAME="Mehdis-Air"
 BREW_KEGS=(caskroom/cask heroku/brew)
@@ -13,7 +15,7 @@ BREW_CASKS=(google-chrome spectacle skype vlc docker the-unarchiver sublime-text
 ###############################################################################
 echo '--Installation--'
 
-echo 'Install xcode'
+echo 'Install XCode'
 if [[ ! -d "$('xcode-select' -print-path 2>/dev/null)" ]]; then
   sudo xcode-select -switch /usr/bin
 fi
@@ -29,8 +31,9 @@ if [[ ! "$(type -P brew)" ]]; then
 fi
 
 echo 'Update Homebrew'
-brew doctor
 brew update
+echo 'Upgrade Homebrew'
+brew upgrade
 
 echo 'Install kegs'
 for keg in "${BREW_KEGS[@]}"; do
@@ -44,17 +47,30 @@ for recipe in "${BREW_RECIPES[@]}"; do
 done
 
 echo 'Install cask recipes'
-brew cask info this-is-somewhat-annoying 2>/dev/null # password hack
+brew cask info this-is-somewhat-annoying 2> /dev/null # password hack
+
+# Check if .app exists
+# input: sublime-text, docker -> output: true, false
+_app_exists() {
+    local app=$(cut -d '-' -f 1 <<< "$1")
+    if [[ ! "$(find /Applications -maxdepth 2 | grep -i $app)" ]]; then
+        echo false
+        return 1
+    fi
+    echo true
+}
 
 for cask in "${BREW_CASKS[@]}"; do
-    if [[ $(_app_exists $cask) == true ]]; then
+    if [[ $(_app_exists $cask) == false ]]; then
         echo "Install $cask"
         brew cask install $cask
     fi
 done
 
+unset _app_exists
+
 echo 'Clean up Homebrew Cask'
-brew cask cleanup
+brew cask cleanup &> /dev/null
 
 echo 'Install Wunderlist'
 mas install 410628904
@@ -62,12 +78,17 @@ mas install 410628904
 echo 'Install Spark'
 mas install 1176895641
 
-brew doctor
+echo 'Update Homebrew'
 brew update
+echo 'Upgrade Homebrew'
+brew upgrade
+echo 'Doctor Homebrew'
+brew doctor
 
 ###############################################################################
 # General UI/UX                                                               #
 ###############################################################################
+echo ''
 echo '--General UI/UX--'
 
 echo 'Set computer name to $COMPUTER_NAME...'
@@ -122,6 +143,7 @@ sudo pmset -a sms 0
 ###############################################################################
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
 ###############################################################################
+echo ''
 echo '--Trackpad, mouse, keyboard, Bluetooth accessories, and input--'
 
 echo 'Enable tap to click for this user and for the login screen'
@@ -141,6 +163,7 @@ launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/nul
 ###############################################################################
 # Screen                                                                      #
 ###############################################################################
+echo ''
 echo '--Finder--'
 
 echo 'Save screenshots in PNG format'
@@ -152,6 +175,7 @@ defaults write com.apple.screencapture disable-shadow -bool true
 ###############################################################################
 # Finder                                                                      #
 ###############################################################################
+echo ''
 echo '--Finder--'
 
 echo 'Allow quitting via ⌘ + Q; doing so will also hide desktop icons'
@@ -208,6 +232,7 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict \
 ###############################################################################
 # Dock, Dashboard, and hot corners                                            #
 ###############################################################################
+echo ''
 echo '--Dock, Dashboard, and hot corners--'
 
 echo 'Minimize windows into their applications icon'
@@ -241,9 +266,10 @@ defaults write com.apple.dock showhidden -bool true
 ###############################################################################
 # Spotlight                                                                   #
 ###############################################################################
+echo ''
 echo '--Spotlight--'
 
-echo 'Hide Spotlight tray-icon (and subsequent helper)'
+echo 'Hide Spotlight tray-icon and subsequent helper'
 sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search
 
 echo 'Disable Spotlight indexing for any volume that gets mounted and has not yet'
@@ -253,6 +279,8 @@ sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Vol
 ###############################################################################
 # Terminal & iTerm 2                                                          #
 ###############################################################################
+echo ''
+echo '--Terminal--'
 
 echo 'Set UTF-8 in Terminal.app'
 defaults write com.apple.terminal StringEncodings -array 4
@@ -260,6 +288,7 @@ defaults write com.apple.terminal StringEncodings -array 4
 ###############################################################################
 # Time Machine                                                                #
 ###############################################################################
+echo ''
 echo '--Time Machine--'
 
 echo 'Disable local Time Machine backups'
@@ -268,4 +297,6 @@ hash tmutil &> /dev/null && sudo tmutil disablelocal
 ###############################################################################
 # The end.                                                                    #
 ###############################################################################
-echo 'Done. For all changes to be taken into account, please restart your Mac.'
+echo ''
+echo 'Done!'
+echo 'For all changes to be taken into account, please restart your Mac.'
