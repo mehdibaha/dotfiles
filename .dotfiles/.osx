@@ -6,7 +6,7 @@ sudo -v
 ##### Config Variables
 ###########################
 BREW_KEGS=(caskroom/cask heroku/brew)
-BREW_RECIPES=(bash mas coreutils git git-extras tree wget heroku/brew/heroku mongodb node openssl python python3 trash youtube-dl gdrive)
+BREW_RECIPES=(bash mas coreutils git git-extras tree wget heroku/brew/heroku mongodb node openssl python python3 trash youtube-dl)
 BREW_CASKS=(google-chrome spectacle skype vlc docker the-unarchiver sublime-text)
 MAC_APPS=(1176895641 410628904) # (Spark, Wunderlist)
 COMPUTER_NAME="Mehdi's Air"
