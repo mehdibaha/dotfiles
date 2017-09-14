@@ -2,16 +2,24 @@
 
 sudo -v
 
-COMPUTER_NAME="Mehdi's Air"
-HOSTNAME="Mehdis-Air"
+###########################
+##### Config Variables
+###########################
 BREW_KEGS=(caskroom/cask heroku/brew)
-BREW_RECIPES=(bash mas coreutils git git-extras tree wget heroku/brew/heroku mongodb node openssl python python3 trash youtube-dl)
+BREW_RECIPES=(bash mas coreutils git git-extras tree wget heroku/brew/heroku mongodb node openssl python python3 trash youtube-dl gdrive)
 BREW_CASKS=(google-chrome spectacle skype vlc docker the-unarchiver sublime-text)
 MAC_APPS=(1176895641 410628904) # (Spark, Wunderlist)
+COMPUTER_NAME="Mehdi's Air"
+HOSTNAME="Mehdis-Air"
+STANDBY_DELAY=10800
+HIBERNATE_MODE=3
+SCREENSHOT_FORMAT=png
+SCREENSHOT_SAVE_PATH=~/Documents/desktop/screenshots
 
 ###########################
 ##### XCode
 ###########################
+
 echo '--XCode--'
 
 echo 'Install XCode...'
@@ -46,7 +54,7 @@ for recipe in "${BREW_RECIPES[@]}"; do
 done
 
 echo 'Update/Upgrade/Doctor Homebrew...'
-brew update && brew upgrade && brew doctor &>> .osx.doctor
+brew update && brew upgrade && brew doctor >> ~/.dotfiles/.osx.doctor
 
 ###########################
 ##### Homebrew Cask
@@ -66,7 +74,7 @@ for cask in "${BREW_CASKS[@]}"; do
 done
 
 echo 'Cleanup/Doctor Homebrew Cask...'
-brew cask cleanup && brew cask doctor &>> .osx.doctor
+brew cask cleanup && brew cask doctor >> ~/.dotfiles/.osx.doctor
 
 ###########################
 ##### MacOS Apps
@@ -96,7 +104,7 @@ sudo scutil --set HostName $HOSTNAME
 sudo scutil --set LocalHostName $HOSTNAME
 
 echo 'Set standby delay to 3 hours...'
-sudo pmset -a standbydelay 10800 # 3*60*60
+sudo pmset -a standbydelay $STANDBY_DELAY # 3*60*60
 
 echo 'Disable the sound effects on boot...'
 sudo nvram SystemAudioVolume=" "
@@ -125,7 +133,7 @@ defaults write NSGlobalDomain NSDisableAutomaticTermination -bool false
 # Faster sleeps, faster wakes, but less battery life
 # For more info: https://superuser.com/a/62677
 echo 'Set hibernate mode to 3...'
-sudo pmset -a hibernatemode 3
+sudo pmset -a hibernatemode $HIBERNATE_MODE
 
 echo 'Remove the sleep image file to save disk space...'
 sudo rm /private/var/vm/sleepimage
@@ -165,10 +173,13 @@ echo ''
 echo '--Finder--'
 
 echo 'Save screenshots in PNG format...'
-defaults write com.apple.screencapture type -string "png"
+defaults write com.apple.screencapture type -string $SCREENSHOT_FORMAT
 
 echo 'Disable shadow in screenshots...'
 defaults write com.apple.screencapture disable-shadow -bool true
+
+echo 'Change default screenshots folder...'
+defaults write com.apple.screencapture location $SCREENSHOT_SAVE_PATH
 
 ###############################################################################
 # Finder                                                                      #
