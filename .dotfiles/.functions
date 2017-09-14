@@ -1,24 +1,17 @@
-#
 # Create & change dir
-#
-mkd () 
-{ 
+mkd ()
+{
     mkdir -p "$@" && cd "$_"
 }
 
-#
 # cd then list dir
-#
 function cd {
     builtin cd "$@"; ls
 }
 
-#
 # Open file or dir
-#
-
-o () 
-{ 
+o ()
+{
     if [ $# -eq 0 ]; then
         open .;
     else
@@ -26,13 +19,18 @@ o ()
     fi
 }
 
-#
-# Defines transfer alias and provides easy command line file and folder sharing.
-#
-# Authors:
-#   Remco Verhoef <remco@dutchcoders.io>
-#
+# Check if .app exists
+# input: sublime-text, docker -> output: true, false
+_app_exists() {
+    local app=$(cut -d '-' -f 1 <<< "$1")
+    if [[ ! "$(find /Applications -maxdepth 2 | grep -i $app)" ]]; then
+        echo false
+        return 1
+    fi
+    echo true
+}
 
+# Defines transfer alias and provides easy command line file and folder sharing.
 transfer() {
     # check curl
     curl --version 2>&1 > /dev/null
@@ -42,28 +40,28 @@ transfer() {
     fi
 
     # check arguments
-    if [ $# -eq 0 ]; 
-    then 
+    if [ $# -eq 0 ];
+    then
         echo "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"
         return 1
     fi
 
     # get temporarily filename, output is written to this file show progress can be showed
     tmpfile=$( mktemp -t transferXXX )
-    
+
     # upload stdin or file
     file=$1
 
-    if tty -s; 
-    then 
-        basefile=$(basename "$file" | sed -e 's/[^a-zA-Z0-9._-]/-/g') 
+    if tty -s;
+    then
+        basefile=$(basename "$file" | sed -e 's/[^a-zA-Z0-9._-]/-/g')
 
         if [ ! -e $file ];
         then
             echo "File $file doesn't exists."
             return 1
         fi
-        
+
         if [ -d $file ];
         then
             # zip directory and transfer
@@ -75,19 +73,15 @@ transfer() {
             # transfer file
             curl --progress-bar --upload-file "$file" "https://transfer.sh/$basefile" >> $tmpfile
         fi
-    else 
+    else
         # transfer pipe
         curl --progress-bar --upload-file "-" "https://transfer.sh/$file" >> $tmpfile
     fi
-   
+
     # cat output link
     cat $tmpfile | pbcopy
     echo "File has been copied to your clipboard :)"
 
     # cleanup
     /bin/rm -f $tmpfile
-}
-
-sman() {
-    man "${1}" | col -b | subl
 }

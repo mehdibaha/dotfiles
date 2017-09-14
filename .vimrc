@@ -16,8 +16,3 @@ imap ii <Esc> " Change swith mode from ESC to double-i"
 
 " Indentation
 set autoindent " Copy indent from last line when starting new line.
-set shiftwidth=4 " The # of spaces for indenting.
-set smarttab " At start of line, <Tab> inserts shiftwidth spaces, <Bs> deletes shiftwidth spaces.
-set softtabstop=4 " Tab key results in 2 spaces
-set tabstop=4 " Tabs indent only 2 spaces
-set expandtab " Expand tabs to spaces

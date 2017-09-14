@@ -9,6 +9,7 @@ def getPsStats(ps):
     # Iterate processes
     sep = re.compile('[\s]+')
     data = ps.split('\n')
+    
     data = [sep.split(row.strip()) for row in data]
     stats = 0
     for row in data:
