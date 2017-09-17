@@ -14,9 +14,7 @@ It targets macOS systems, but it should work on *nix as well.
 
 ## Install
 
-On a sparkling fresh installation of macOS, install the dotfiles:
-
-### Clone with Git
+On a sparkling fresh installation of macOS, install the dotfiles with Git:
 
     git clone https://github.com/mehdibaha/dotfiles.git ~/.dotfiles
     source ~/.dotfiles/install.sh
