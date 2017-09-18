@@ -1,23 +1,17 @@
 #!/usr/bin/env bash
 
-# Ask for the administrator password upfront
-sudo -v
-
-# Keep-alive: update existing `sudo` time stamp until script has finished
-while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2> /dev/null &
-
 ###########################
 ##### Config Variables
 ###########################
-BREW_KEGS=(caskroom/cask heroku/brew)
-BREW_RECIPES=(bash mas coreutils git git-extras tree wget heroku/brew/heroku mongodb node openssl python python3 trash youtube-dl wifi-password)
+BREW_TAPS=(caskroom/cask heroku/brew)
+BREW_RECIPES=(bash mas coreutils git git-extras tree wget heroku mongodb node openssl python python3 trash youtube-dl wifi-password)
 BREW_CASKS=(google-chrome spectacle skype vlc docker the-unarchiver sublime-text)
 MAC_APPS=(1176895641 410628904) # (Spark, Wunderlist)
 
 ###########################
 ##### XCode
 ###########################
-echo '--'
+echo ''
 echo '--XCode--'
 
 echo 'Install XCode...'
@@ -39,22 +33,25 @@ fi
 echo 'Update/Upgrade Homebrew...'
 { brew update && brew upgrade; } &> /dev/null
 
-echo 'Install kegs'
-for keg in "${BREW_KEGS[@]}"; do
-    echo "    Tap $keg..."
-    brew tap $keg &> /dev/null
+echo 'Install taps...'
+current_taps=$(brew tap)
+for tap in "${BREW_TAPS[@]}"; do
+    if [[ ! "$(echo $current_taps | grep -i $tap)" ]]; then
+        echo "    Install $tap..."
+        brew install $tap &> /dev/null
+    fi
 done
 
 echo 'Install recipes...'
+current_recipes=$(brew list)
 for recipe in "${BREW_RECIPES[@]}"; do
-    echo "    Install $recipe..."
-    if [[ ! "$(brew list | grep -i $recipe)" ]]; then
+    if [[ ! "$(echo $current_recipes | grep -i $recipe)" ]]; then
         echo "    Install $recipe..."
         brew install $recipe &> /dev/null
     fi
 done
 
-echo 'Update/Upgrade/Doctor/Prune Homebrew...'
+echo 'Update/Upgrade/Prune Homebrew...'
 { brew update && brew upgrade && brew prune; } &> /dev/null
 
 ###########################
@@ -75,10 +72,8 @@ for cask in "${BREW_CASKS[@]}"; do
     fi
 done
 
-echo 'Cleanup/Doctor Homebrew Cask...'
+echo 'Cleanup Homebrew Cask...'
 { brew cask cleanup; } &> /dev/null
-
-return 1;
 
 ###########################
 ##### MacOS Apps
@@ -86,20 +81,20 @@ return 1;
 echo ''
 echo '--MacOS Apps--'
 
-echo 'Install MacOS Apps'
+echo 'Install MacOS Apps...'
+current_apps=$(mas list)
 for app in "${MAC_APPS[@]}"; do
-    echo "    Install $app"
-    if [[ ! "$(mas list | grep -i $search)" ]]; then
+    if [[ ! "$(echo $current_apps | grep -i $app)" ]]; then
         echo "    Install $app..."
         mas install $app &> /dev/null
     fi
 done
 
-echo 'Upgrade MacOS apps'
+echo 'Upgrade MacOS apps...'
 mas upgrade &> /dev/null
 
-###########################
-# The end.
-###########################
+#################################
+# The end
+#################################
 echo ''
-echo 'bootstrap.sh: Done!'
+echo 'bootstrap.sh : Finished!'

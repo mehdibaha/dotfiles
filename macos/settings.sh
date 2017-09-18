@@ -1,11 +1,5 @@
 #!/usr/bin/env bash
 
-# Ask for the administrator password upfront
-sudo -v
-
-# Keep-alive: update existing `sudo` time stamp until script has finished
-while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2> /dev/null &
-
 ###########################
 ##### Config Variables
 ###########################
@@ -35,7 +29,7 @@ cron_entries=("$mailto" "$brew_update" "$brew_clean" "$sys_clean")
 
 echo 'Add cron entries...'
 for cron_entry in "${cron_entries[@]}"; do
-    echo "Add '$cron_entry' to crontab..."
+    echo "Add '$cron_entry'..."
     if ! sudo crontab -l | fgrep "$cron_entry" > /dev/null; then
       (sudo crontab -l 2> /dev/null; echo "$cron_entry") | sudo crontab -
     fi
@@ -75,9 +69,6 @@ defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
 echo 'Expand print panel by default...'
 defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
 defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
-
-echo 'Remove duplicates in the “Open With” menu...'
-/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user
 
 echo 'Disable Resume system-wide...'
 defaults write com.apple.systempreferences NSQuitAlwaysKeepsWindows -bool false
@@ -322,24 +313,6 @@ echo 'Set UTF-8 in Terminal.app...'
 defaults write com.apple.terminal StringEncodings -array 4
 
 ###########################
-# Sublime Text
-###########################
-echo ''
-echo '--Sublime Text--'
-
-echo 'Install Sublime Text settings...'
-cp "${DOTFILES_DIR}/macos/sublime.json" ~/Library/Application\ Support/Sublime\ Text*/Packages/User/Preferences.sublime-settings 2> /dev/null
-
-###########################
-# Spectacle.app
-###########################
-echo ''
-echo '--Spectacle--'
-
-echo 'Set up my preferred keyboard shortcuts...'
-cp "${DOTFILES_DIR}/macos/spectacle.json" ~/Library/Application\ Support/Spectacle/Shortcuts.json 2> /dev/null
-
-###########################
 # Time Machine
 ###########################
 echo ''
@@ -354,19 +327,18 @@ echo ''
 echo '--Kill affected applications--'
 
 for app in "Activity Monitor" "Dock" "Finder" "Spectacle"; do
-    echo "Kill ${app}"
+    echo "Kill ${app}..."
     killall "${app}" &> /dev/null
 done
 
 # Always cool to have those again
 for app in "Spectacle"; do
-    echo "Open ${app}"
+    echo "Open ${app}..."
     open "/Applications/${app}.app" &> /dev/null
 done
 
-###########################
-# The end.
-###########################
+#################################
+# The end
+#################################
 echo ''
-echo 'bootstrap.sh: Done!'
-
+echo 'settings.sh : Finished!'
