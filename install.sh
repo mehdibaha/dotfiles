@@ -18,10 +18,10 @@ ln -sfv "$DOTFILES_DIR/git/.gitignore_global" ~
 ln -sfv "${DOTFILES_DIR}/macos/sublime.json" ~/Library/Application\ Support/Sublime\ Text*/Packages/User/Preferences.sublime-settings
 ln -sfv "${DOTFILES_DIR}/macos/spectacle.json" ~/Library/Application\ Support/Spectacle/Shortcuts.json
 
-echo 'Launcing boostrap...'
+echo 'Starting boostrap...'
 . "$DOTFILES_DIR/macos/bootstrap.sh"
 
-echo 'Launcing settings...'
+echo 'Starting settings...'
 . "$DOTFILES_DIR/macos/settings.sh"
 
 echo ''

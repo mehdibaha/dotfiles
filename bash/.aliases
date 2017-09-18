@@ -29,8 +29,6 @@ alias env='source env/bin/activate'
 alias cc='pbcopy' # Ctrl-C
 alias cv='pbpaste' # Ctrl-V
 
-
-
 # Heroku stuff
 alias mdb='sudo mongod -f /etc/mongodb.conf'
 alias h='heroku'
@@ -63,6 +61,9 @@ alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
 # Also, clear Apple’s System Logs to improve shell startup speed.
 # Finally, clear download history from quarantine. https://mths.be/bum
 alias empty="sudo /bin/rm -rfv /Volumes/*/.Trashes; sudo /bin/rm -rfv ~/.Trash; sudo /bin/rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
+
+# Remove 'Open with...' duplicates
+alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
 
 # Forbid rm use, encourage del command
 alias rm='echo Use del or the the full path i.e. \/bin\/rm'

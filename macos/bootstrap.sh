@@ -4,7 +4,7 @@
 ##### Config Variables
 ###########################
 BREW_TAPS=(caskroom/cask heroku/brew)
-BREW_RECIPES=(bash mas coreutils git git-extras tree wget heroku mongodb node openssl python python3 trash youtube-dl wifi-password)
+BREW_RECIPES=(bash mas coreutils git git-extras tree wget heroku mongodb node openssl python python3 trash youtube-dl dockutil wifi-password)
 BREW_CASKS=(google-chrome spectacle skype vlc docker the-unarchiver sublime-text)
 MAC_APPS=(1176895641 410628904) # (Spark, Wunderlist)
 

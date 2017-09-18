@@ -3,6 +3,7 @@
 ###########################
 ##### Config Variables
 ###########################
+DOCK_APPS=("Spark" "Launchpad" "Calendar" "Utilities/Terminal" "Google Chrome")
 COMPUTER_NAME="Mehdi's Air"
 HOSTNAME="Mehdis-Air"
 SCREENSHOT_FORMAT="png"
@@ -24,7 +25,7 @@ echo '--Crontabs--'
 mailto='MAILTO=""'
 brew_update='@daily { brew update && brew upgrade && mas upgrade; } &> /dev/null'
 brew_clean='@daily { brew cleanup && brew cask cleanup; } &> /dev/null'
-sys_clean='@daily { cd && empty && cleanup; } &> /dev/null'
+sys_clean='@daily { cd && empty && cleanup && lscleanup; } &> /dev/null'
 cron_entries=("$mailto" "$brew_update" "$brew_clean" "$sys_clean")
 
 echo 'Add cron entries...'
@@ -241,43 +242,6 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict \
     OpenWith -bool true \
     Privileges -bool true
 
-####################################
-# Dock, Dashboard, and hot corners
-####################################
-echo ''
-echo '--Dock, Dashboard, and hot corners--'
-
-echo 'Minimize windows into their applications icon...'
-defaults write com.apple.dock minimize-to-application -bool true
-
-echo 'Set the icon size of Dock items to 36 pixels...'
-defaults write com.apple.dock tilesize -int $ICON_DOCK_SIZE
-
-echo 'Enable spring loading for all Dock items...'
-defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool true
-
-echo 'Show indicator lights for open applications in the Dock...'
-defaults write com.apple.dock show-process-indicators -bool true
-
-echo 'Speed up Mission Control animations...'
-defaults write com.apple.dock expose-animation-duration -float 0
-
-echo 'Dont group windows by application in Mission Control...'
-# (i.e. use the old Exposé behavior instead)
-defaults write com.apple.dock expose-group-by-app -bool true
-
-echo 'Disable Dashboard...'
-defaults write com.apple.dashboard mcx-disabled -bool true
-
-echo 'Dont show Dashboard as a Space...'
-defaults write com.apple.dock dashboard-in-overlay -bool true
-
-echo 'Dont automatically rearrange Spaces based on most recent use...'
-defaults write com.apple.dock mru-spaces -bool false
-
-echo 'Make Dock icons of hidden applications translucent...'
-defaults write com.apple.dock showhidden -bool true
-
 ###########################
 # Spotlight
 ###########################
@@ -320,13 +284,59 @@ echo '--Time Machine--'
 echo 'Disable local Time Machine backups...'
 hash tmutil &> /dev/null && sudo tmutil disablelocal
 
+####################################
+# Dock, Dashboard, and hot corners
+####################################
+echo ''
+echo '--Dock, Dashboard, and hot corners--'
+
+echo 'Minimize windows into their applications icon...'
+defaults write com.apple.dock minimize-to-application -bool true
+
+echo 'Set the icon size of Dock items to 36 pixels...'
+defaults write com.apple.dock tilesize -int $ICON_DOCK_SIZE
+
+echo 'Enable spring loading for all Dock items...'
+defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool true
+
+echo 'Show indicator lights for open applications in the Dock...'
+defaults write com.apple.dock show-process-indicators -bool true
+
+echo 'Speed up Mission Control animations...'
+defaults write com.apple.dock expose-animation-duration -float 0
+
+echo 'Dont group windows by application in Mission Control...'
+# (i.e. use the old Exposé behavior instead)
+defaults write com.apple.dock expose-group-by-app -bool true
+
+echo 'Disable Dashboard...'
+defaults write com.apple.dashboard mcx-disabled -bool true
+
+echo 'Dont show Dashboard as a Space...'
+defaults write com.apple.dock dashboard-in-overlay -bool true
+
+echo 'Dont automatically rearrange Spaces based on most recent use...'
+defaults write com.apple.dock mru-spaces -bool false
+
+echo 'Make Dock icons of hidden applications translucent...'
+defaults write com.apple.dock showhidden -bool true
+
+echo 'Add dock items...'
+dockutil --no-restart --remove all
+for dock_app in "${DOCK_APPS[@]}"; do
+    echo "    Add '$dock_app' to dock..."
+    dockutil --no-restart --add "/Applications/${dock_app}.app" --position end
+done
+echo "    Add ~/Downloads folder to dock..."
+dockutil --no-restart --add '~/Downloads' --view list --display folder
+
 #################################
 # Killing affected applications
 #################################
 echo ''
 echo '--Kill affected applications--'
 
-for app in "Activity Monitor" "Dock" "Finder" "Spectacle"; do
+for app in "Dock" "Activity Monitor" "Finder" "Spectacle"; do
     echo "Kill ${app}..."
     killall "${app}" &> /dev/null
 done
