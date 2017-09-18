@@ -1,97 +1,45 @@
 #!/usr/bin/env bash
 
+# Ask for the administrator password upfront
 sudo -v
+
+# Keep-alive: update existing `sudo` time stamp until script has finished
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2> /dev/null &
 
 ###########################
 ##### Config Variables
 ###########################
-BREW_KEGS=(caskroom/cask heroku/brew)
-BREW_RECIPES=(bash mas coreutils git git-extras tree wget heroku/brew/heroku mongodb node openssl python python3 trash youtube-dl)
-BREW_CASKS=(google-chrome spectacle skype vlc docker the-unarchiver sublime-text)
-MAC_APPS=(1176895641 410628904) # (Spark, Wunderlist)
 COMPUTER_NAME="Mehdi's Air"
 HOSTNAME="Mehdis-Air"
-STANDBY_DELAY=10800
+SCREENSHOT_FORMAT="png"
+SCREENSHOT_PATH="${HOME}/Documents/screenshots"
+TIMEZONE="Europe/Paris"
+DEFAULT_VIEW="Nlsv" # List View
+ICON_SIZE=50
+ICON_SPACING=100
+STANDBY_DELAY=10800 # 3*60*60
 HIBERNATE_MODE=3
-SCREENSHOT_FORMAT=png
-SCREENSHOT_SAVE_PATH=~/Documents/desktop/screenshots
-DOTFILES="${HOME}/.dotfiles"
-LOGFILE="${DOTFILES}/.macos.log"
+ICON_DOCK_SIZE=46
 
 ###########################
-##### XCode
+##### Crontabs
 ###########################
+echo '--'
+echo '--Crontabs--'
 
-echo '--XCode--'
+mailto='MAILTO=""'
+brew_update='@daily { brew update && brew upgrade && mas upgrade; } &> /dev/null'
+brew_clean='@daily { brew cleanup && brew cask cleanup; } &> /dev/null'
+sys_clean='@daily { cd && empty && cleanup; } &> /dev/null'
+cron_entries=("$mailto" "$brew_update" "$brew_clean" "$sys_clean")
 
-echo 'Install XCode...'
-if [[ ! -d "$('xcode-select' -print-path 2>/dev/null)" ]]; then
-  sudo xcode-select -switch /usr/bin
-fi
-
-###########################
-##### Homebrew
-###########################
-echo ''
-echo '--Homebrew--'
-
-echo 'Install Homebrew...'
-if [[ ! "$(type -P brew)" ]]; then
-  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-fi
-
-echo 'Update/Upgrade Homebrew...'
-{ brew update && brew upgrade; } >> $LOGFILE
-
-echo 'Install kegs'
-for keg in "${BREW_KEGS[@]}"; do
-    echo "    Tap $keg..."
-    brew tap $keg >> LOGFILE
-done
-
-echo 'Install recipes...'
-for recipe in "${BREW_RECIPES[@]}"; do
-    echo "    Install $recipe..."
-    brew install $recipe >> $LOGFILE
-done
-
-echo 'Update/Upgrade/Doctor Homebrew...'
-{ brew update && brew upgrade && brew doctor; } >> $LOGFILE
-
-###########################
-##### Homebrew Cask
-###########################
-echo ''
-echo '--Homebrew Cask--'
-
-echo 'Install cask recipes...'
-brew cask info this-is-somewhat-annoying 2> /dev/null
-
-for cask in "${BREW_CASKS[@]}"; do
-    cask=$(cut -d '-' -f 1 <<< "$cask")
-    if [[ ! "$(find /Applications -maxdepth 2 | grep -i $cask)" ]]; then
-        echo "    Install $cask..."
-        brew cask install $cask
+echo 'Add cron entries...'
+for cron_entry in "${cron_entries[@]}"; do
+    echo "Add '$cron_entry' to crontab..."
+    if ! sudo crontab -l | fgrep "$cron_entry" > /dev/null; then
+      (sudo crontab -l 2> /dev/null; echo "$cron_entry") | sudo crontab -
     fi
 done
-
-echo 'Cleanup/Doctor Homebrew Cask...'
-{ brew cask cleanup && brew cask doctor; } >> $LOGFILE
-
-###########################
-##### MacOS Apps
-###########################
-echo ''
-echo '--MacOS Apps--'
-
-echo 'Install MacOS Apps'
-for app in "${MAC_APPS[@]}"; do
-    echo "    Install $app"
-    mas install $app
-done
-
-echo 'Upgrade MacOS apps'
-mas upgrade >> $LOGFILE
 
 ###########################
 ##### General UI/UX
@@ -106,7 +54,7 @@ sudo scutil --set HostName $HOSTNAME
 sudo scutil --set LocalHostName $HOSTNAME
 
 echo 'Set standby delay to 3 hours...'
-sudo pmset -a standbydelay $STANDBY_DELAY # 3*60*60
+sudo pmset -a standbydelay $STANDBY_DELAY
 
 echo 'Disable the sound effects on boot...'
 sudo nvram SystemAudioVolume=" "
@@ -149,15 +97,14 @@ echo 'Set hibernate mode to 3...'
 sudo pmset -a hibernatemode $HIBERNATE_MODE
 
 echo 'Remove the sleep image file to save disk space...'
-sudo rm /private/var/vm/sleepimage
+sudo /bin/rm -rf /private/var/vm/sleepimage
 echo '  Create a zero-byte file instead...'
 sudo touch /private/var/vm/sleepimage
 echo '  Making sure it can’t be rewritten...'
 sudo chflags uchg /private/var/vm/sleepimage
 
 echo 'Disable the sudden motion sensor...'
-# Not useful for SSDs
-sudo pmset -a sms 0
+sudo pmset -a sms 0 # Not useful for SSDs
 
 ###################################################################
 ##### Trackpad, mouse, keyboard, Bluetooth accessories, and input
@@ -186,7 +133,7 @@ defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
 defaults write NSGlobalDomain AppleMetricUnits -bool true
 
 # Set the timezone; see `sudo systemsetup -listtimezones` for other values
-sudo systemsetup -settimezone "Europe/Paris" > /dev/null
+sudo systemsetup -settimezone $TIMEZONE > /dev/null
 
 echo 'Stop iTunes from responding to the keyboard media keys...'
 launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null
@@ -204,7 +151,7 @@ echo 'Disable shadow in screenshots...'
 defaults write com.apple.screencapture disable-shadow -bool true
 
 echo 'Change default screenshots folder...'
-defaults write com.apple.screencapture location -string $SCREENSHOT_SAVE_PATH
+defaults write com.apple.screencapture location -string $SCREENSHOT_PATH
 
 ###########################
 # Finder
@@ -242,17 +189,14 @@ defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 echo 'Enable spring loading for directories...'
 defaults write NSGlobalDomain com.apple.springing.enabled -bool true
 
+echo 'Remove the spring loading delay for directories...'
+defaults write NSGlobalDomain com.apple.springing.delay -float 0
+
 echo 'Keep folders on top when sorting by name...'
 defaults write com.apple.finder _FXSortFoldersFirst -bool true
 
 echo 'When performing a search, search the current folder by default...'
 defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
-
-echo 'Disable the warning when changing a file extension...'
-defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
-
-echo 'Remove the spring loading delay for directories...'
-defaults write NSGlobalDomain com.apple.springing.delay -float 0
 
 echo 'Avoiding create .DS_Store files on network volumes...'
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
@@ -269,7 +213,7 @@ defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
 defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
 
 echo 'Use list view in all Finder windows by default...'
-defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
+defaults write com.apple.finder FXPreferredViewStyle -string $DEFAULT_VIEW
 
 echo 'Show item info near icons on the desktop and in other icon views...'
 /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
@@ -277,7 +221,7 @@ echo 'Show item info near icons on the desktop and in other icon views...'
 /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
 
 echo 'Show item info to the right of the icons on the desktop...'
-/usr/libexec/PlistBuddy -c "Set DesktopViewSettings:IconViewSettings:labelOnBottom false" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set DesktopViewSettings:IconViewSettings:labelOnBottom true" ~/Library/Preferences/com.apple.finder.plist
 
 echo 'Enable snap-to-grid for icons on the desktop and in other icon views...'
 /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
@@ -285,14 +229,14 @@ echo 'Enable snap-to-grid for icons on the desktop and in other icon views...'
 /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
 
 echo 'Increase grid spacing for icons on the desktop and in other icon views...'
-/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:gridSpacing ${ICON_SPACING}" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:gridSpacing ${ICON_SPACING}" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:gridSpacing ${ICON_SPACING}" ~/Library/Preferences/com.apple.finder.plist
 
 echo 'Increase the size of icons on the desktop and in other icon views...'
-/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:iconSize ${ICON_SIZE}" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:iconSize ${ICON_SIZE}" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:iconSize ${ICON_SIZE}" ~/Library/Preferences/com.apple.finder.plist
 
 echo 'Show the ~/Library folder...'
 chflags nohidden ~/Library
@@ -316,7 +260,7 @@ echo 'Minimize windows into their applications icon...'
 defaults write com.apple.dock minimize-to-application -bool true
 
 echo 'Set the icon size of Dock items to 36 pixels...'
-defaults write com.apple.dock tilesize -int 46
+defaults write com.apple.dock tilesize -int $ICON_DOCK_SIZE
 
 echo 'Enable spring loading for all Dock items...'
 defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool true
@@ -349,9 +293,6 @@ defaults write com.apple.dock showhidden -bool true
 echo ''
 echo '--Spotlight--'
 
-echo 'Hide Spotlight tray-icon and subsequent helper...'
-sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search
-
 echo 'Disable Spotlight indexing for never undexed volumes...'
 sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
 
@@ -364,11 +305,8 @@ echo '--Activity Monitor--'
 echo 'Show the main window when launching Activity Monitor...'
 defaults write com.apple.ActivityMonitor OpenMainWindow -bool true
 
-echo 'Visualize CPU usage in the Activity Monitor Dock icon...'
-defaults write com.apple.ActivityMonitor IconType -int 5
-
-echo 'Show all processes in Activity Monitor...'
-defaults write com.apple.ActivityMonitor ShowCategory -int 0
+echo 'Show My Processes in Activity Monitor...'
+defaults write com.apple.ActivityMonitor ShowCategory -int 102
 
 echo 'Sort Activity Monitor results by CPU usage...'
 defaults write com.apple.ActivityMonitor SortColumn -string "CPUUsage"
@@ -390,7 +328,7 @@ echo ''
 echo '--Sublime Text--'
 
 echo 'Install Sublime Text settings...'
-cp -r "${DOTFILES}/Preferences.sublime-settings" ~/Library/Application\ Support/Sublime\ Text*/Packages/User/Preferences.sublime-settings 2> /dev/null
+cp "${DOTFILES_DIR}/macos/sublime.json" ~/Library/Application\ Support/Sublime\ Text*/Packages/User/Preferences.sublime-settings 2> /dev/null
 
 ###########################
 # Spectacle.app
@@ -399,7 +337,7 @@ echo ''
 echo '--Spectacle--'
 
 echo 'Set up my preferred keyboard shortcuts...'
-cp -r "${DOTFILES}/spectacle.json" ~/Library/Application\ Support/Spectacle/Shortcuts.json 2> /dev/null
+cp "${DOTFILES_DIR}/macos/spectacle.json" ~/Library/Application\ Support/Spectacle/Shortcuts.json 2> /dev/null
 
 ###########################
 # Time Machine
@@ -415,15 +353,20 @@ hash tmutil &> /dev/null && sudo tmutil disablelocal
 echo ''
 echo '--Kill affected applications--'
 
-for app in "Activity Monitor" "Dock" "Finder" "Spectacle" "Terminal"; do
+for app in "Activity Monitor" "Dock" "Finder" "Spectacle"; do
     echo "Kill ${app}"
     killall "${app}" &> /dev/null
+done
+
+# Always cool to have those again
+for app in "Spectacle"; do
+    echo "Open ${app}"
+    open "/Applications/${app}.app" &> /dev/null
 done
 
 ###########################
 # The end.
 ###########################
 echo ''
-echo 'Done!'
-echo "Doctor analysis generated in ${LOGFILE}"
-echo 'For all changes to be taken into account, please restart your Mac.'
+echo 'bootstrap.sh: Done!'
+

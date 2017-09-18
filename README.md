@@ -2,7 +2,7 @@
 
 These are my dotfiles. Take anything you want, but at your own risk.
 
-It targets macOS systems, but it should work on *nix as well.
+It targets macOS systems, but it should work on Unix with a bit of tweaking.
 
 ## Package overview
 

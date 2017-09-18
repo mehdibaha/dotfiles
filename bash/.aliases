@@ -26,7 +26,6 @@ alias python='python3'
 alias pip='pip3'
 alias venv='python -m venv env'
 alias env='source env/bin/activate'
-alias free='python ~/.dotfiles/free.py'
 alias cc='pbcopy' # Ctrl-C
 alias cv='pbpaste' # Ctrl-V
 

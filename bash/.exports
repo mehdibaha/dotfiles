@@ -9,6 +9,9 @@ export LANG='en_US.UTF-8';
 # Don’t clear the screen after quitting a manual page.
 export MANPAGER='less -X';
 
+# Link Homebrew casks in '/Applications' rather than '~/Applications'
+export HOMEBREW_CASK_OPTS='--appdir=/Applications'
+
 # ignore duplicate commands, ignore commands starting with a space
 export HISTCONTROL=erasedups:ignorespace
 
@@ -17,3 +20,6 @@ export HISTSIZE=5000
 
 # append to the history instead of overwriting (good for multiple connections)
 shopt -s histappend
+
+# Autocorrect typos in path names when using `cd`
+shopt -s cdspell

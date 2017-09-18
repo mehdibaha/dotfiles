@@ -1,7 +1,1 @@
-# Ignore everything
-*
 
-# But not these files...
-!.gitignore
-!.gitignore_global
-!.
