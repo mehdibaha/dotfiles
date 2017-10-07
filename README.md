@@ -10,7 +10,7 @@ It targets macOS systems, but it should work on Unix with a bit of tweaking.
   * Bash + [coreutils](https://en.wikipedia.org/wiki/GNU_Core_Utilities) + bash-completion
   * [Homebrew](https://brew.sh) + [homebrew-cask](https://caskroom.github.io)
   * Git + Python 2/3
-* [macOS apps](https://github.com/mehdibaha/dotfiles/blob/master/brew.sh)
+* macOS apps
 
 ## Install
 
