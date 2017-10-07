@@ -2,9 +2,8 @@
 alias reload='source ~/.bash_profile'
 
 # List all files in colorized, long format
-alias l='$(which ls) -lAh --color --group-directories-first' # Works if other ls installed
-alias ll='echo Use l or the full path i.e. $(which ls)'
-alias ls='$(which ls)'
+alias l="ls -lAh --color --group-directories-first" # needs coreuils
+alias ll="echo Use l or the full path i.e. /usr/local/..."
 
 # Easier navigation
 alias ..='cd ..'
@@ -12,7 +11,9 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 
 # Cd to personalized dirs
-alias cdc='cd ~/Documents/coding'
+alias doc='cd ~/Documents'
+alias dow='cd ~/Downloads'
+alias cod='cd ~/Documents/coding'
 alias kth='cd ~/Documents/kth'
 
 # Applications
@@ -26,8 +27,7 @@ alias python='python3'
 alias pip='pip3'
 alias venv='python -m venv env'
 alias env='source env/bin/activate'
-alias cc='pbcopy' # Ctrl-C
-alias cv='pbpaste' # Ctrl-V
+alias dec='deactivate'
 
 # Heroku stuff
 alias mdb='sudo mongod -f /etc/mongodb.conf'
@@ -48,21 +48,18 @@ alias ga='git add'
 alias gd='git diff'
 alias gch='git checkout'
 alias gb='git branch'
-alias ghb='git clone $(pbpaste)'
+alias git='hub'
 
-# Enable aliases to be sudo’ed
+# Enable aliases to be sudoed
 alias sudo='sudo '
 
-# Trash utilities
 # Recursively delete `.DS_Store` files
-alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
+alias dsstore="find . -type f -name '*.DS_Store' -ls -delete"
 
 # Empty the Trash on all mounted volumes and the main HDD.
-# Also, clear Apple’s System Logs to improve shell startup speed.
-# Finally, clear download history from quarantine. https://mths.be/bum
-alias empty="sudo /bin/rm -rfv /Volumes/*/.Trashes; sudo /bin/rm -rfv ~/.Trash; sudo /bin/rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
+alias cleanup="sudo /bin/rm -rfv /Volumes/*/.Trashes; sudo /bin/rm -rfv ~/.Trash; sudo /bin/rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
 
-# Remove 'Open with...' duplicates
+# Remove Open with... duplicates
 alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
 
 # Forbid rm use, encourage del command

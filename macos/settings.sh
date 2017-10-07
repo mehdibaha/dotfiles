@@ -3,38 +3,60 @@
 ###########################
 ##### Config Variables
 ###########################
-DOCK_APPS=("Spark" "Launchpad" "Calendar" "Utilities/Terminal" "Google Chrome")
+
+# Lists
+DOCK_APPS=("Spark" "Launchpad" "Calendar" "Utilities/Terminal" "Safari" "Sublime Text")
+
+# Paths
+LAUNCHD_LOG="$HOME/.launchd.log"
+FINDER_DEFAULT_PATH="$HOME/Documents"
+SCREENSHOT_PATH="$HOME/Documents/screenshots"
+LAUNCHD_SCRIPT="$HOME/.dotfiles/launchd/script.sh"
+LAUNCHD_FILE="$HOME/.dotfiles/launchd/local.plist"
+LAUNCHD_FINAL="$HOME/Library/LaunchAgents/local.plist"
+
+# Strings
 COMPUTER_NAME="Mehdi's Air"
 HOSTNAME="Mehdis-Air"
 SCREENSHOT_FORMAT="png"
-SCREENSHOT_PATH="${HOME}/Documents/screenshots"
 TIMEZONE="Europe/Paris"
-DEFAULT_VIEW="Nlsv" # List View
+FINDER_DEFAULT_VIEW="Nlsv" # List View
+
+# Ints
 ICON_SIZE=50
 ICON_SPACING=100
 STANDBY_DELAY=10800 # 3*60*60
+SCREENSHOT_MAX_OLD=3 # delete 3 days old screenshots
 HIBERNATE_MODE=3
 ICON_DOCK_SIZE=46
+LAUNCHD_INTERVAL=3600 # Every day in seconds (min. 10 sec)
 
 ###########################
-##### Crontabs
+##### Launchd
 ###########################
-echo '--'
-echo '--Crontabs--'
+echo '--Launchd--'
 
-mailto='MAILTO=""'
-brew_update='@daily { brew update && brew upgrade && mas upgrade; } &> /dev/null'
-brew_clean='@daily { brew cleanup && brew cask cleanup; } &> /dev/null'
-sys_clean='@daily { cd && empty && cleanup && lscleanup; } &> /dev/null'
-cron_entries=("$mailto" "$brew_update" "$brew_clean" "$sys_clean")
+echo 'Replace variables in launchd script...'
+script_content=$(<$LAUNCHD_SCRIPT.template)
+echo "${script_content//\$HOME/$HOME}" > $LAUNCHD_SCRIPT && script_content=$(<$LAUNCHD_SCRIPT)
+echo "${script_content//\$SCREENSHOT_PATH/$SCREENSHOT_PATH}" > $LAUNCHD_SCRIPT && script_content=$(<$LAUNCHD_SCRIPT)
+echo "${script_content//\$SCREENSHOT_MAX_OLD/$SCREENSHOT_MAX_OLD}" > $LAUNCHD_SCRIPT && script_content=$(<$LAUNCHD_SCRIPT)
 
-echo 'Add cron entries...'
-for cron_entry in "${cron_entries[@]}"; do
-    echo "Add '$cron_entry'..."
-    if ! sudo crontab -l | fgrep "$cron_entry" > /dev/null; then
-      (sudo crontab -l 2> /dev/null; echo "$cron_entry") | sudo crontab -
-    fi
-done
+echo 'Replace variables in launchd plist...'
+launchd_content=$(<$LAUNCHD_FILE.template)
+echo "${launchd_content//\$LAUNCHD_SCRIPT/$LAUNCHD_SCRIPT}" > $LAUNCHD_FILE && launchd_content=$(<$LAUNCHD_FILE)
+echo "${launchd_content//\$LAUNCHD_LOG/$LAUNCHD_LOG}" > $LAUNCHD_FILE && launchd_content=$(<$LAUNCHD_FILE)
+echo "${launchd_content//\$LAUNCHD_INTERVAL/$LAUNCHD_INTERVAL}" > $LAUNCHD_FILE && launchd_content=$(<$LAUNCHD_FILE)
+
+echo 'Emptying old launchd log...'
+echo '' > $LAUNCHD_LOG
+
+echo 'Set executing permissions in cron file...'
+chmod +x $LAUNCHD_SCRIPT
+
+echo 'Set launchd file...'
+mv $LAUNCHD_FILE $LAUNCHD_FINAL
+launchctl unload "$LAUNCHD_FINAL" && launchctl load "$LAUNCHD_FINAL"
 
 ###########################
 ##### General UI/UX
@@ -113,8 +135,8 @@ echo 'Disable press-and-hold for keys in favor of key repeat...'
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
 echo 'Set a blazingly fast keyboard repeat rate...'
-defaults write NSGlobalDomain KeyRepeat -int 1
-defaults write NSGlobalDomain InitialKeyRepeat -int 10
+defaults write NSGlobalDomain KeyRepeat -int 2
+defaults write NSGlobalDomain InitialKeyRepeat -int 12
 
 # Set language and text formats
 # Note: if you’re in the US, replace `EUR` with `USD`, `Centimeters` with
@@ -156,6 +178,9 @@ defaults write com.apple.finder QuitMenuItem -bool false
 
 echo 'Disable window animations and Get Info animations...'
 defaults write com.apple.finder DisableAllAnimations -bool true
+
+echo 'Set new finder default directory...'
+defaults write com.apple.finder NewWindowTargetPath -string "file://$FINDER_DEFAULT_PATH/"
 
 echo 'Show icons for hard drives, servers, and removable media on the desktop...'
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
@@ -205,7 +230,7 @@ defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
 defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
 
 echo 'Use list view in all Finder windows by default...'
-defaults write com.apple.finder FXPreferredViewStyle -string $DEFAULT_VIEW
+defaults write com.apple.finder FXPreferredViewStyle -string $FINDER_DEFAULT_VIEW
 
 echo 'Show item info near icons on the desktop and in other icon views...'
 /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
@@ -293,7 +318,7 @@ echo '--Dock, Dashboard, and hot corners--'
 echo 'Minimize windows into their applications icon...'
 defaults write com.apple.dock minimize-to-application -bool true
 
-echo 'Set the icon size of Dock items to 36 pixels...'
+echo "Set the icon size of Dock items to $ICON_DOCK_SIZE..."
 defaults write com.apple.dock tilesize -int $ICON_DOCK_SIZE
 
 echo 'Enable spring loading for all Dock items...'
@@ -327,8 +352,6 @@ for dock_app in "${DOCK_APPS[@]}"; do
     echo "    Add '$dock_app' to dock..."
     dockutil --no-restart --add "/Applications/${dock_app}.app" --position end
 done
-echo "    Add ~/Downloads folder to dock..."
-dockutil --no-restart --add '~/Downloads' --view list --display folder
 
 #################################
 # Killing affected applications
@@ -342,13 +365,7 @@ for app in "Dock" "Activity Monitor" "Finder" "Spectacle"; do
 done
 
 # Always cool to have those again
-for app in "Spectacle"; do
+for app in "Spectacle" "Dock"; do
     echo "Open ${app}..."
     open "/Applications/${app}.app" &> /dev/null
 done
-
-#################################
-# The end
-#################################
-echo ''
-echo 'settings.sh : Finished!'
