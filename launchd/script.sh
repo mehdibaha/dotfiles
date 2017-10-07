@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Note: Putting absolute path because launchd doesn't recognize anything
+
 # APP UPDATES
 { /usr/local/bin/brew update && /usr/local/bin/brew upgrade && /usr/local/bin/mas upgrade; } &> /dev/null
 echo [$(date +%x\ %X)] "app updates completed"
