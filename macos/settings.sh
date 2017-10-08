@@ -4,32 +4,35 @@
 ##### Config Variables
 ###########################
 
-# Lists
-DOCK_APPS=("Spark" "Launchpad" "Calendar" "Utilities/Terminal" "Safari" "Sublime Text")
-
-# Paths
-LAUNCHD_LOG="$HOME/.launchd.log"
-FINDER_DEFAULT_PATH="$HOME/Documents"
-SCREENSHOT_PATH="$HOME/Documents/screenshots"
-LAUNCHD_SCRIPT="$HOME/.dotfiles/launchd/script.sh"
-LAUNCHD_FILE="$HOME/.dotfiles/launchd/local.plist"
-LAUNCHD_FINAL="$HOME/Library/LaunchAgents/local.plist"
-
-# Strings
+# Computer
 COMPUTER_NAME="Mehdi's Air"
 HOSTNAME="Mehdis-Air"
-SCREENSHOT_FORMAT="png"
 TIMEZONE="Europe/Paris"
-FINDER_DEFAULT_VIEW="Nlsv" # List View
+STANDBY_DELAY=10800 # 3*60*60
+HIBERNATE_MODE=3
 
-# Ints
+# Visual
+DOCK_APPS=("Spark" "Launchpad" "Calendar" "Utilities/Terminal" "Safari" "Sublime Text")
 ICON_SIZE=50
 ICON_SPACING=100
-STANDBY_DELAY=10800 # 3*60*60
-SCREENSHOT_MAX_OLD=3 # delete 3 days old screenshots
-HIBERNATE_MODE=3
 ICON_DOCK_SIZE=46
-LAUNCHD_INTERVAL=3600 # Every day in seconds (min. 10 sec)
+
+# Finder stuff
+FINDER_DEFAULT_VIEW="Nlsv" # List View
+FINDER_DEFAULT_PATH="$HOME/Documents"
+
+# Screenshots
+SCREENSHOT_PATH="$HOME/Documents/screenshots"
+SCREENSHOT_FORMAT="png"
+SCREENSHOT_MAX_OLD=3 # delete 3 days old screenshots
+
+# Launchd
+LAUNCHD_LOG="$HOME/.launchd.log"
+LAUNCHD_SCRIPT="$HOME/.dotfiles/launchd/script.sh"
+LAUNCHD_FILE="$HOME/.dotfiles/launchd/local.plist"
+LAUNCHD_FOLDER="$HOME/Library/LaunchAgents"
+LAUNCHD_FINAL="$LAUNCHD_FOLDER/local.plist"
+LAUNCHD_INTERVAL=21600 # Every half-day in seconds (60*60*6)
 
 ###########################
 ##### Launchd
@@ -51,11 +54,11 @@ echo "${launchd_content//\$LAUNCHD_INTERVAL/$LAUNCHD_INTERVAL}" > $LAUNCHD_FILE 
 echo 'Emptying old launchd log...'
 echo '' > $LAUNCHD_LOG
 
-echo 'Set executing permissions in cron file...'
+echo 'Set executing permissions in launchd file...'
 chmod +x $LAUNCHD_SCRIPT
 
 echo 'Set launchd file...'
-mv $LAUNCHD_FILE $LAUNCHD_FINAL
+ln -sf $LAUNCHD_FILE $LAUNCHD_FOLDER
 launchctl unload "$LAUNCHD_FINAL" && launchctl load "$LAUNCHD_FINAL"
 
 ###########################
@@ -195,7 +198,7 @@ echo 'Show status bar...'
 defaults write com.apple.finder ShowStatusBar -bool false
 
 echo 'Show path bar...'
-defaults write com.apple.finder ShowPathbar -bool true
+defaults write com.apple.finder ShowPathbar -bool false
 
 echo 'Enable full POSIX path as Finder window title...'
 defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
