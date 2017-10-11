@@ -27,6 +27,7 @@
 		".hg",
 		"CVS"
 	],
+	"font_face": "Monospace",
 	"font_size": 14,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
@@ -48,6 +49,10 @@
 	},
 	"remember_open_files": true,
 	"remember_open_folders": true,
+	"rulers":
+	[
+		80
+	],
 	"save_on_focus_lost": true,
 	"scroll_past_end": false,
 	"show_full_path": true,
