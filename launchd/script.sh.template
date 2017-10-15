@@ -22,4 +22,8 @@ echo 'general cleanups completed...'
 # OLD SCREENSHOTS REMOVED
 { find $SCREENSHOT_PATH/* -type f -mtime +$SCREENSHOT_MAX_OLD -exec rm {} \;; } &> /dev/null
 echo 'screenshots removed...'
+
+# SYNCING BACKUP
+{ rclone sync --exclude-from $RCLONE_FILTER --delete-excluded local:$HOME gdrive:$HOSTNAME; } &> /dev/null
+echo 'backup completed...'
 echo ''

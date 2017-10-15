@@ -1,0 +1,32 @@
+# Blob directories #
+###################
+- .git/
+- env/
+- lib/
+- node_modules/
+- bower_components/
+- *source/
+- *build/
+- vendor/
+- *.app/
+
+# Compiled source #
+###################
+- *.class
+- *.o
+- *.so
+- *.pyc
+
+# Misc #
+########
+- *.log
+- *.dat
+- *.DS_Store
+
+# Main directories #
+####################
+- /.**
+- /.*
++ /Downloads/**
++ /Documents/**
+- *

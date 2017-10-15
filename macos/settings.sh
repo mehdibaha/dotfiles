@@ -32,7 +32,11 @@ LAUNCHD_SCRIPT="$HOME/.dotfiles/launchd/script.sh"
 LAUNCHD_FILE="$HOME/.dotfiles/launchd/local.plist"
 LAUNCHD_FOLDER="$HOME/Library/LaunchAgents"
 LAUNCHD_FINAL="$LAUNCHD_FOLDER/local.plist"
-LAUNCHD_INTERVAL=21600 # Every half-day in seconds (60*60*6)
+LAUNCHD_INTERVAL=43200 # Every half-day in seconds (60*60*6)
+
+# Rclone
+RCLONE_FILTER="$HOME/.dotfiles/macos/rclone-filter.text"
+RCLONE_REMOTE="gdrive"
 
 ###########################
 ##### Launchd
@@ -44,6 +48,9 @@ script_content=$(<$LAUNCHD_SCRIPT.template)
 echo "${script_content//\$HOME/$HOME}" > $LAUNCHD_SCRIPT && script_content=$(<$LAUNCHD_SCRIPT)
 echo "${script_content//\$SCREENSHOT_PATH/$SCREENSHOT_PATH}" > $LAUNCHD_SCRIPT && script_content=$(<$LAUNCHD_SCRIPT)
 echo "${script_content//\$SCREENSHOT_MAX_OLD/$SCREENSHOT_MAX_OLD}" > $LAUNCHD_SCRIPT && script_content=$(<$LAUNCHD_SCRIPT)
+echo "${script_content//\$RCLONE_FILTER/$RCLONE_FILTER}" > $LAUNCHD_SCRIPT && script_content=$(<$LAUNCHD_SCRIPT)
+echo "${script_content//\$RCLONE_REMOTE/$RCLONE_REMOTE}" > $LAUNCHD_SCRIPT && script_content=$(<$LAUNCHD_SCRIPT)
+echo "${script_content//\$HOSTNAME/$HOSTNAME}" > $LAUNCHD_SCRIPT && script_content=$(<$LAUNCHD_SCRIPT)
 
 echo 'Replace variables in launchd plist...'
 launchd_content=$(<$LAUNCHD_FILE.template)

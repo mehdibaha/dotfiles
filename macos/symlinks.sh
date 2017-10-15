@@ -12,3 +12,4 @@ ln -sf "$DOTFILES_DIR/git/.gitignore_global" ~
 ln -sf "$DOTFILES_DIR/macos/my.sublime-settings" "$HOME/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings"
 ln -sf "$DOTFILES_DIR/macos/my.sublime-keymap" "$HOME/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap"
 ln -sf "$DOTFILES_DIR/macos/spectacle.json" "$HOME/Library/Application Support/Spectacle/Shortcuts.json"
+ln -sf "$DOTFILES_DIR/macos/spectacle.json" "$HOME/Library/Application Support/Spectacle/Shortcuts.json"
