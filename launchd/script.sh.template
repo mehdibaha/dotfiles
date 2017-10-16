@@ -24,6 +24,6 @@ echo 'general cleanups completed...'
 echo 'screenshots removed...'
 
 # SYNCING BACKUP
-{ rclone sync --exclude-from $RCLONE_FILTER --delete-excluded local:$HOME gdrive:$HOSTNAME; } &> /dev/null
+{ /usr/local/bin/rclone sync --filter-from $RCLONE_FILTER --drive-use-trash=false --delete-excluded local:$HOME gdrive:$HOSTNAME ; } &> /dev/null
 echo 'backup completed...'
 echo ''

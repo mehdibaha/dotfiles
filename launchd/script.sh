@@ -22,4 +22,8 @@ echo 'general cleanups completed...'
 # OLD SCREENSHOTS REMOVED
 { find /Users/mehdib/Documents/screenshots/* -type f -mtime +3 -exec rm {} \;; } &> /dev/null
 echo 'screenshots removed...'
+
+# SYNCING BACKUP
+{ /usr/local/bin/rclone sync --filter-from /Users/mehdib/.dotfiles/macos/rclone-filter.txt --drive-use-trash=false --delete-excluded local:/Users/mehdib gdrive:Mehdis-Air ; } &> /dev/null
+echo 'backup completed...'
 echo ''

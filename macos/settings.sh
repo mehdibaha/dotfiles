@@ -35,7 +35,7 @@ LAUNCHD_FINAL="$LAUNCHD_FOLDER/local.plist"
 LAUNCHD_INTERVAL=43200 # Every half-day in seconds (60*60*6)
 
 # Rclone
-RCLONE_FILTER="$HOME/.dotfiles/macos/rclone-filter.text"
+RCLONE_FILTER="$HOME/.dotfiles/macos/rclone-filter.txt"
 RCLONE_REMOTE="gdrive"
 
 ###########################

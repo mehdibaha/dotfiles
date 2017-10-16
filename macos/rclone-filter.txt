@@ -3,6 +3,10 @@
 - .git/
 - env/
 - lib/
+- bin/
+- venv/
+- .Python/
+- include/
 - node_modules/
 - bower_components/
 - *source/
