@@ -1,1 +1,6 @@
+# Ignore DS_Store
 *.DS_Store
+
+# Ignore files with real env vars
+local.plist
+script.sh

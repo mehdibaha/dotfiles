@@ -20,6 +20,7 @@ ICON_DOCK_SIZE=46
 # Finder stuff
 FINDER_DEFAULT_VIEW="Nlsv" # List View
 FINDER_DEFAULT_PATH="$HOME/Documents"
+TRASH_MAX_OLD=10 # delete 10-day old files in trash
 
 # Screenshots
 SCREENSHOT_PATH="$HOME/Documents/screenshots"
@@ -46,6 +47,7 @@ echo '--Launchd--'
 echo 'Replace variables in launchd script...'
 script_content=$(<$LAUNCHD_SCRIPT.template)
 echo "${script_content//\$HOME/$HOME}" > $LAUNCHD_SCRIPT && script_content=$(<$LAUNCHD_SCRIPT)
+echo "${script_content//\$TRASH_MAX_OLD/$TRASH_MAX_OLD}" > $LAUNCHD_SCRIPT && script_content=$(<$LAUNCHD_SCRIPT)
 echo "${script_content//\$SCREENSHOT_PATH/$SCREENSHOT_PATH}" > $LAUNCHD_SCRIPT && script_content=$(<$LAUNCHD_SCRIPT)
 echo "${script_content//\$SCREENSHOT_MAX_OLD/$SCREENSHOT_MAX_OLD}" > $LAUNCHD_SCRIPT && script_content=$(<$LAUNCHD_SCRIPT)
 echo "${script_content//\$RCLONE_FILTER/$RCLONE_FILTER}" > $LAUNCHD_SCRIPT && script_content=$(<$LAUNCHD_SCRIPT)

@@ -13,14 +13,14 @@ echo 'app updates completed...'
 echo 'app cleanups completed...'
 
 # GENERAL CLEANUPS
-{ /bin/rm -rfv /Volumes/*/.Trashes && /bin/rm -rfv ~/.Trash && /bin/rm -rfv /private/var/log/asl/*.asl; } &> /dev/null
+{ find $HOME/.Trash -type f -atime +$TRASH_MAX_OLD -exec rm {} \; && /bin/rm -rfv /private/var/log/asl/*.asl; }
 { /usr/bin/sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'; } &> /dev/null
 { find $HOME -type f -name '*.DS_Store' -ls -delete; } &> /dev/null
 { /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder; } &> /dev/null
 echo 'general cleanups completed...'
 
 # OLD SCREENSHOTS REMOVED
-{ find $SCREENSHOT_PATH/* -type f -mtime +$SCREENSHOT_MAX_OLD -exec rm {} \;; } &> /dev/null
+{ find $SCREENSHOT_PATH/* -type f -atime +$SCREENSHOT_MAX_OLD -exec rm {} \;; } &> /dev/null
 echo 'screenshots removed...'
 
 # SYNCING BACKUP

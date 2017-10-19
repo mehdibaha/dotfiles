@@ -32,3 +32,6 @@ nmap j gj
 nmap k gk
 noremap <Up> gk
 noremap <Down> gj
+
+" Hide swp files
+set dir=/tmp
