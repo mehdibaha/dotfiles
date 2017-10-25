@@ -4,16 +4,8 @@
 
 echo ---$(date +%F\ %X)---
 
-# APP UPDATES
-{ /usr/local/bin/brew update && /usr/local/bin/brew upgrade && /usr/local/bin/mas upgrade; } &> /dev/null
-echo 'app updates completed...'
-
-# APP CLEANUPS
-{ /usr/local/bin/brew cleanup  && /usr/local/bin/brew cask cleanup; } &> /dev/null
-echo 'app cleanups completed...'
-
 # GENERAL CLEANUPS
-{ find $HOME/.Trash -type f -atime +$TRASH_MAX_OLD -exec rm {} \; && /bin/rm -rfv /private/var/log/asl/*.asl; }
+{ find $HOME/.Trash -type f -atime +$TRASH_MAX_OLD -exec rm {} \;; } &> /dev/null
 { /usr/bin/sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'; } &> /dev/null
 { find $HOME -type f -name '*.DS_Store' -ls -delete; } &> /dev/null
 { /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder; } &> /dev/null
@@ -22,6 +14,14 @@ echo 'general cleanups completed...'
 # OLD SCREENSHOTS REMOVED
 { find $SCREENSHOT_PATH/* -type f -atime +$SCREENSHOT_MAX_OLD -exec rm {} \;; } &> /dev/null
 echo 'screenshots removed...'
+
+# APP UPDATES
+{ /usr/local/bin/brew update && /usr/local/bin/brew upgrade && /usr/local/bin/mas upgrade; } &> /dev/null
+echo 'app updates completed...'
+
+# APP CLEANUPS
+{ /usr/local/bin/brew cleanup  && /usr/local/bin/brew cask cleanup; } &> /dev/null
+echo 'app cleanups completed...'
 
 # SYNCING BACKUP
 { /usr/local/bin/rclone sync --filter-from $RCLONE_FILTER --drive-use-trash=false --delete-excluded local:$HOME gdrive:$HOSTNAME ; } &> /dev/null

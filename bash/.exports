@@ -23,3 +23,6 @@ shopt -s histappend
 
 # Autocorrect typos in path names when using `cd`
 shopt -s cdspell
+
+# Change colors
+export LS_COLORS='di=01;33'
