@@ -2,8 +2,8 @@
 alias reload='source ~/.bash_profile'
 
 # List all files in colorized, long format
-alias l="ls -lAh --color --group-directories-first" # needs coreuils
-alias ll="echo Use l or the full path i.e. /usr/local/..."
+alias ls="ls --color --group-directories-first"
+alias l="ls -lAh"
 
 # Easier navigation
 alias ..='cd ..'
@@ -20,8 +20,6 @@ alias kth='cd ~/Documents/kth'
 alias cat='ccat'
 alias scp='scp -r' # Copy dirs too when scp
 alias v='/usr/bin/vim'
-alias vim='echo Use v or the full path i.e. $(which vim)'
-alias vi='echo Use v or the full path i.e. $(which vi)'
 alias s='subl'
 alias python='python3'
 alias pip='pip3'
