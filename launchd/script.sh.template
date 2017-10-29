@@ -24,6 +24,6 @@ echo 'app updates completed...'
 echo 'app cleanups completed...'
 
 # SYNCING BACKUP
-{ /usr/local/bin/rclone sync --filter-from $RCLONE_FILTER --drive-use-trash=false --delete-excluded local:$HOME gdrive:$HOSTNAME ; } &> /dev/null
+{ /usr/local/bin/rclone sync --filter-from $RCLONE_FILTER --drive-use-trash=false --delete-excluded --log-level ERROR local:$HOME gdrive:$HOSTNAME ; } &> /dev/null
 echo 'backup completed...'
 echo ''
