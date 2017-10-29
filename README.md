@@ -34,9 +34,9 @@ It targets macOS systems, but it should work on Unix with a bit of tweaking.
 
 2. To verify rclone is set-up properly, run the following command:
 
-    > rclone listremotes
-    gdrive: # can be any other storage solution
-    local: # this is your locale hard-drive
+       > rclone listremotes
+       gdrive: # can be any other storage solution
+       local: # this is your locale hard-drive
 
 3. Make sure rclone-related variables are properly set in [settings.sh](macos/settings.sh).
 
