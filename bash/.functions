@@ -19,6 +19,16 @@ o ()
     fi
 }
 
+# Activate python venv
+activate ()
+{
+    if [ $# -eq 0]; then
+        source env/bin/activate;
+    else
+        source "~/Documents/coding/$@/env/bin/activate";
+    fi
+}
+
 # Defines transfer alias and provides easy command line file and folder sharing.
 transfer() {
     # check curl
@@ -73,4 +83,9 @@ transfer() {
 
     # cleanup
     /bin/rm -f $tmpfile
+}
+
+function reload_audio() {
+    sudo kextunload /System/Library/Extensions/AppleHDA.kext
+    sudo kextload /System/Library/Extensions/AppleHDA.kext
 }

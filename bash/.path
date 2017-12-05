@@ -2,3 +2,4 @@
 export PATH="/usr/local/sbin:$PATH"
 export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 export PATH="/usr/local/Cellar/qt/5.9.1:$PATH"
+export PATH="/usr/local/opt/go/libexec/bin:$PATH"

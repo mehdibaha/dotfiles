@@ -26,3 +26,6 @@ shopt -s cdspell
 
 # Change colors
 export LS_COLORS='di=01;33'
+
+# Add go path
+export GOPATH="$HOME/Documents/coding/go"

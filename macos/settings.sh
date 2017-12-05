@@ -12,7 +12,7 @@ STANDBY_DELAY=10800 # 3*60*60
 HIBERNATE_MODE=3
 
 # Visual
-DOCK_APPS=("Spark" "Launchpad" "Calendar" "Utilities/Terminal" "Safari" "Sublime Text")
+DOCK_APPS=("Spark" "Launchpad" "Calendar" "Utilities/Terminal" "Firefox" "Sublime Text")
 ICON_SIZE=50
 ICON_SPACING=100
 ICON_DOCK_SIZE=46

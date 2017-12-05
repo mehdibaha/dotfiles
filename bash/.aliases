@@ -24,7 +24,6 @@ alias s='subl'
 alias python='python3'
 alias pip='pip3'
 alias venv='python -m venv env'
-alias env='source env/bin/activate'
 alias dec='deactivate'
 
 # Heroku stuff
