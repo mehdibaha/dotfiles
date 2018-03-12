@@ -6,8 +6,6 @@ It targets macOS systems, but it should work on Unix with a bit of tweaking.
 
 ## Overview
 
-### Features
-
 * Install brew/casks/macOS apps
 * Setup macOS settings (even the apps in the Dock!)
 * Setup settings for macOS apps (Sublime Text, Spectacle)
@@ -28,7 +26,7 @@ It targets macOS systems, but it should work on Unix with a bit of tweaking.
     * **dev stuff**: Docker, Sublime Text
     * **email + todo**: Spark, Wunderlist
 
-## Backup
+### Backup
 
 1. Add a remote storage and a local remote using `rclone config`
 
@@ -56,6 +54,6 @@ Clone the dotfiles with Git:
 
         source ~/.dotfiles/install.sh
 
-# Credits
+## Credits
 
 Many thanks to the [dotfiles community](https://dotfiles.github.io).
