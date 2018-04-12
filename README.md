@@ -2,7 +2,7 @@
 
 These are my dotfiles. Take anything you want, but at your own risk.
 
-It targets macOS systems, but it should work on Unix with a bit of tweaking.
+It targets macOS systems, but it should work on Unix with a bit of tweaking (Update: a Linux-compatible is [available here](https://github.com/mehdibaha/dotfiles/tree/linux))
 
 ## Overview
 
