@@ -20,12 +20,22 @@ o ()
 }
 
 # Activate python venv
-activate ()
+env ()
 {
-    if [ $# -eq 0]; then
+    if [ $# -eq 0 ]; then
         source env/bin/activate;
     else
-        source "~/Documents/coding/$@/env/bin/activate";
+        source ~/Documents/coding/$@/env/bin/activate;
+    fi
+}
+
+# Quick deploy to heroku
+hdep ()
+{
+    if [ $# -eq 0 ]; then
+        echo "Error: no deploy message found.";
+    else
+        git add . && gc "$@" && git ps origin master && hpromote || git ps origin master && hpromote
     fi
 }
 
