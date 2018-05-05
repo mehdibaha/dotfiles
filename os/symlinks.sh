@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# Setting dotfiles dir
 DOTFILES_DIR="$HOME/.dotfiles"
 
 echo "Symlinking .bash_profile to $HOME"

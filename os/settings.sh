@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Setting dotfiles dir
+DOTFILES_DIR="$HOME/.dotfiles"
+
 ###########################
 ##### Config Variables
 ###########################
