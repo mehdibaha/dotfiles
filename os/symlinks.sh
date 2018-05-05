@@ -16,11 +16,9 @@ ln -sf "$DOTFILES_DIR/git/.gitconfig" ~
 echo "Symlinking .gitignore_global to $HOME"
 ln -sf "$DOTFILES_DIR/git/.gitignore_global" ~
 
-if [ "$OS" == "macos" ]; then
-    echo "Symlinking my.sublime-settings to $HOME/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings"
-    ln -sf "$DOTFILES_DIR/os/my.sublime-settings" "$HOME/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings"
-    echo "Symlinking my.sublime-keymap to $HOME/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap"
-    ln -sf "$DOTFILES_DIR/os/my.sublime-keymap" "$HOME/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap"
+if [ "$(uname)" == "Darwin" ]; then
+    echo "Symlinking sublime settings to $HOME/Library/Application Support/Sublime Text 3/Packages/User"
+    ln -s "$DOTFILES_DIR/apps/sublime/User" "$HOME/Library/Application Support/Sublime Text 3/Packages/"
     echo "Symlinking spectacle.json to $HOME/Library/Application Support/Spectacle/Shortcuts.json"
-    ln -sf "$DOTFILES_DIR/os/spectacle.json" "$HOME/Library/Application Support/Spectacle/Shortcuts.json"
+    ln -sf "$DOTFILES_DIR/apps/spectacle/spectacle.json" "$HOME/Library/Application Support/Spectacle/Shortcuts.json"
 fi

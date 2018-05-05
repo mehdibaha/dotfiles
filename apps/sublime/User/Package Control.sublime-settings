@@ -1,0 +1,29 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"CodeFormatter",
+		"Dockerfile Syntax Highlighting",
+		"EclipseJavaFormatter",
+		"EditorConfig",
+		"GitGutter",
+		"Gitignored File Excluder",
+		"Google Spell Check",
+		"JavaScript Completions",
+		"JsPrettier",
+		"Markdown Preview",
+		"MarkdownLivePreview",
+		"Package Control",
+		"Python Fix Imports",
+		"Python Improved",
+		"SublimeAStyleFormatter",
+		"Terraform",
+		"Vue Syntax Highlight",
+		"VueFormatter",
+		"Vuejs Complete Package",
+		"WordCount"
+	]
+}
