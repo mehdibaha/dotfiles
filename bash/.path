@@ -1,6 +1,1 @@
-# Extending path for local sbin, coreutils, qt
-export PATH="/usr/local/sbin:$PATH"
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-export PATH="/usr/local/Cellar/qt/5.9.1:$PATH"
-export PATH="/usr/local/opt/go/libexec/bin:$PATH"
-export PATH="./env/bin:$PATH"
+export PATH="./env/bin:$PATH" # local virtual environment

@@ -95,5 +95,4 @@ if [ -n "$INSTALL_APPS" ]; then
 
     echo 'Upgrade MacOS apps...'
     mas upgrade &> /dev/null
-
 fi

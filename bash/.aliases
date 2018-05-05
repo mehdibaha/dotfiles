@@ -10,20 +10,13 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 
-# Cd to personalized dirs
-alias doc='cd ~/Documents'
-alias dow='cd ~/Downloads'
-alias cod='cd ~/Documents/coding'
-alias kth='cd ~/Documents/kth'
-
 # Applications
-alias cat='ccat'
 alias scp='scp -r' # Copy dirs too when scp
 alias v='/usr/bin/vim'
-alias s='subl'
 alias python='python3'
 alias pip='pip3'
 alias venv='python -m venv env'
+alias env='source env/bin/activate'
 alias dec='deactivate'
 
 # Heroku stuff
@@ -31,6 +24,8 @@ alias mdb='sudo mongod -f /etc/mongodb.conf'
 alias h='heroku'
 alias hrun='h local:run'
 alias hpromote='h pipelines:promote -r staging'
+
+# Pybabel stuff
 alias binit='pybabel init -i messages.pot -d translations -l en && pybabel init -i messages.pot -d translations -l fr'
 alias bupdate='pybabel extract -F babel.cfg -o messages.pot .'
 alias bmerge='pybabel update -i messages.pot -d translations'
@@ -45,20 +40,6 @@ alias ga='git add'
 alias gd='git diff'
 alias gch='git checkout'
 alias gb='git branch'
-alias git='hub'
 
 # Enable aliases to be sudoed
 alias sudo='sudo '
-
-# Recursively delete `.DS_Store` files
-alias dsstore="find . -type f -name '*.DS_Store' -ls -delete"
-
-# Empty the Trash on all mounted volumes and the main HDD.
-alias cleanup="sudo /bin/rm -rfv /Volumes/*/.Trashes; sudo /bin/rm -rfv ~/.Trash; sudo /bin/rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
-
-# Remove Open with... duplicates
-alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
-
-# Forbid rm use, encourage del command
-alias rm='echo Use del or the the full path i.e. \/bin\/rm'
-alias del='trash'

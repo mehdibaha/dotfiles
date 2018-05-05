@@ -44,7 +44,7 @@ bash_prompt_command ()
     # Parse Git branch name
     P_GIT=$(parse_git_branch);
 
-    # Parse Virtual Env && Conda
+    # Parse Virtual Env
     P_VENV="";
     if test -n "$VIRTUAL_ENV" ; then
         P_VENV="(`basename \"$VIRTUAL_ENV\"`) ";

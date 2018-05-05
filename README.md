@@ -2,13 +2,12 @@
 
 These are my dotfiles. Take anything you want, but at your own risk.
 
-The master branch primarily targets macOS systems, but a fully [Linux-compatible version is available here](https://github.com/mehdibaha/dotfiles/tree/linux).
+Most of the features are targeted to macOS systems, but the dotfiles are fully compatible with Linux-based systems.
 
 ## Overview
 
 * Install brew/casks/macOS apps
-* Setup macOS settings (even the apps in the Dock!)
-* Setup settings for macOS apps (Sublime Text, Spectacle)
+* Setup settings for macOS and apps (Dock positions, Sublime Text, Spectacle)
 * Symlink dotfiles (bash_profile, vim, gitconfig...)
 * Setup periodic script w/ native launchd (for: backups, cleanups, updates...)
 
@@ -36,12 +35,12 @@ Clone the dotfiles with Git:
 
 * If you want to include installation of apps/recipes (common in new computers):
 
-        INSTALL_APPS=1 source ~/.dotfiles/install.sh
+        INSTALL_APPS=1 source ~/.dotfiles/boot.sh
 
-* If you're only making changes to the settings:
+* Or if you're only making changes to the settings:
 
-        source ~/.dotfiles/install.sh
-        
+        source ~/.dotfiles/boot.sh
+
 ### Backup (optional)
 
 1. Add a remote storage and a local remote using `rclone config`
@@ -52,7 +51,7 @@ Clone the dotfiles with Git:
        gdrive: # can be any other storage solution
        local: # this is your locale hard-drive
 
-3. Make sure rclone-related variables are properly set in [settings.sh](macos/settings.sh).
+3. Make sure rclone-related variables are properly set in [settings.sh](os/settings.sh).
 
 ## Credits
 

@@ -1,0 +1,23 @@
+# Cd to personalized dirs
+alias doc='cd ~/Documents'
+alias dow='cd ~/Downloads'
+alias cod='cd ~/Documents/coding'
+alias kth='cd ~/Documents/kth'
+
+# Applications
+alias cat='ccat'
+alias s='subl'
+alias git='hub'
+
+# Recursively delete `.DS_Store` files
+alias dsstore="find . -type f -name '*.DS_Store' -ls -delete"
+
+# Empty the Trash on all mounted volumes and the main HDD.
+alias cleanup="sudo /bin/rm -rfv /Volumes/*/.Trashes; sudo /bin/rm -rfv ~/.Trash; sudo /bin/rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
+
+# Remove Open with... duplicates
+alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
+
+# Forbid rm use, encourage del command
+alias rm='echo Use del or the the full path i.e. \/bin\/rm'
+alias del='trash'

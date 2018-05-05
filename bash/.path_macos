@@ -1,0 +1,2 @@
+export PATH="/usr/local/sbin:$PATH" # Tuxera NTFS
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH" # core-utils

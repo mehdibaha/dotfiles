@@ -9,9 +9,6 @@ silent! set mouse=nvc
 set laststatus=2
 set noshowmode
 
-" NERDTree
-map <C-n> :NERDTreeToggle<CR>
-
 " Colors
 set t_Co=256
 let g:monokai_termcolors=256

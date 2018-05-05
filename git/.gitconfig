@@ -1,14 +1,12 @@
 [user]
-	name = Mehdi BAHA
-	email = elmehdi.baha@gmail.com
+    name = Mehdi BAHA
+    email = elmehdi.baha@gmail.com
 [push]
-	default = simple
+    default = simple
 [alias]
-	pl = pull
-	ps = push
-[credential]
-	helper = osxkeychain
+    pl = pull
+    ps = push
 [pull]
-	rebase = true
+    rebase = true
 [core]
-	excludesfile = $HOME/.gitignore_global
+    excludesfile = $HOME/.gitignore_global

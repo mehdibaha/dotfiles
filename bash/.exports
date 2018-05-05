@@ -9,9 +9,6 @@ export LANG='en_US.UTF-8';
 # Don’t clear the screen after quitting a manual page.
 export MANPAGER='less -X';
 
-# Link Homebrew casks in '/Applications' rather than '~/Applications'
-export HOMEBREW_CASK_OPTS='--appdir=/Applications'
-
 # ignore duplicate commands, ignore commands starting with a space
 export HISTCONTROL=erasedups:ignorespace
 
@@ -26,6 +23,3 @@ shopt -s cdspell
 
 # Change colors
 export LS_COLORS='di=01;33'
-
-# Add go path
-export GOPATH="$HOME/Documents/coding/go"

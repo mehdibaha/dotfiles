@@ -29,14 +29,14 @@ SCREENSHOT_MAX_OLD=3 # delete 3 days old screenshots
 
 # Launchd
 LAUNCHD_LOG="$HOME/.launchd.log"
-LAUNCHD_SCRIPT="$HOME/.dotfiles/launchd/script.sh"
-LAUNCHD_FILE="$HOME/.dotfiles/launchd/local.plist"
+LAUNCHD_SCRIPT="$DOTFILES_DIR/launchd/script.sh"
+LAUNCHD_FILE="$DOTFILES_DIR/launchd/local.plist"
 LAUNCHD_FOLDER="$HOME/Library/LaunchAgents"
 LAUNCHD_FINAL="$LAUNCHD_FOLDER/local.plist"
 LAUNCHD_INTERVAL=43200 # Every half-day in seconds (60*60*6)
 
 # Rclone
-RCLONE_FILTER="$HOME/.dotfiles/macos/rclone-filter.txt"
+RCLONE_FILTER="$DOTFILES_DIR/os/rclone-filter.txt"
 RCLONE_REMOTE="gdrive"
 
 ###########################
@@ -122,8 +122,6 @@ echo '--SSD-specific tweaks--'
 echo 'Set hibernate mode to 3...'
 sudo pmset -a hibernatemode $HIBERNATE_MODE
 
-echo 'Remove the sleep image file to save disk space...'
-sudo /bin/rm -rf /private/var/vm/sleepimage
 echo '  Create a zero-byte file instead...'
 sudo touch /private/var/vm/sleepimage
 echo '  Making sure it can’t be rewritten...'
