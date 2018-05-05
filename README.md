@@ -37,7 +37,7 @@ Clone the dotfiles with Git:
 
         INSTALL_APPS=1 source ~/.dotfiles/boot.sh
 
-* Or if you're only making changes to the settings:
+* If you're only making changes to the settings:
 
         source ~/.dotfiles/boot.sh
 
