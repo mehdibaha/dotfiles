@@ -8,7 +8,7 @@ DOTFILES_DIR="$HOME/.dotfiles"
 ###########################
 
 # Computer
-COMPUTER_NAME="Mehdi's Air"
+COMPUTER_NAME="Mehdis-Air"
 HOSTNAME="Mehdis-Air"
 TIMEZONE="Europe/Paris"
 STANDBY_DELAY=10800 # 3*60*60

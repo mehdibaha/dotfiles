@@ -22,7 +22,6 @@ set cursorline "Highlight current line"
 set nostartofline "Don't reset cursor to start of line when moving around"
 set title "Show title in menu bar"
 set nu "Show line numbers"
-set autoindent "Copy indent from last line when starting new line."
 
 " Moving screen lines, *not* buffer lines, *ever* "
 nmap j gj
