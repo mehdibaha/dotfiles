@@ -27,7 +27,7 @@
 - *.log
 - *.dat
 - *.DS_Store
-- NOOBS*.zip
+- NOOBS*
 
 # Main directories #
 ####################
