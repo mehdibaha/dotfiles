@@ -14,16 +14,16 @@ Most of the features are targeted to macOS systems, but the dotfiles are fully c
 ### Packages
 
 * [Recipes](https://brew.sh)
-    * **basics**: bash, coreutils, git, git-extras
+    * **basics**: bash, coreutils, git
     * **utilities**: tree, wget, openssl
-    * **binaries**: python, python3, heroku, mongodb
+    * **binaries**: python, heroku, mongodb
     * **extras**: mas, trash, dockutil, hub
 
 * [Casks](https://caskroom.github.io) + [macOS apps](https://github.com/mas-cli/mas)
     * **utilities**: Spectacle, The Unarchiver
     * **extras**:  Skype, VLC
     * **dev stuff**: Docker, Sublime Text
-    * **email + todo**: Spark, Wunderlist
+    * **email**: Spark
 
 ## Install
 
