@@ -13,6 +13,7 @@
 - *build/
 - vendor/
 - *.app/
+- epic/
 
 # Compiled source #
 ###################
@@ -26,6 +27,7 @@
 - *.log
 - *.dat
 - *.DS_Store
+- NOOBS*
 
 # Main directories #
 ####################
