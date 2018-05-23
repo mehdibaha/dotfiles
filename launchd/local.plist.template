@@ -21,9 +21,9 @@
   <true/>
 
   <key>StandardErrorPath</key>
-  <string>$LAUNCHD_LOG</string>
+  <string>$LAUNCHD_LOG_ERR</string>
 
   <key>StandardOutPath</key>
-  <string>$LAUNCHD_LOG</string>
+  <string>$LAUNCHD_LOG_STD</string>
 </dict>
 </plist>

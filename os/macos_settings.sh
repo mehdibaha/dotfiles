@@ -15,7 +15,7 @@ STANDBY_DELAY=10800 # 3*60*60
 HIBERNATE_MODE=3
 
 # Visual
-DOCK_APPS=("Spark" "Launchpad" "Calendar" "Utilities/Terminal" "Firefox" "Sublime Text")
+DOCK_APPS=("Spark" "Launchpad" "Utilities/Terminal" "Firefox" "Sublime Text")
 ICON_SIZE=50
 ICON_SPACING=100
 ICON_DOCK_SIZE=46
@@ -31,7 +31,8 @@ SCREENSHOT_FORMAT="png"
 SCREENSHOT_MAX_OLD=3 # delete 3 days old screenshots
 
 # Launchd
-LAUNCHD_LOG="$HOME/.launchd.log"
+LAUNCHD_LOG_STD="$HOME/.launchd.log.std"
+LAUNCHD_LOG_ERR="$HOME/.launchd.log.err"
 LAUNCHD_SCRIPT="$DOTFILES_DIR/launchd/script.sh"
 LAUNCHD_FILE="$DOTFILES_DIR/launchd/local.plist"
 LAUNCHD_FOLDER="$HOME/Library/LaunchAgents"
@@ -60,11 +61,12 @@ echo "${script_content//\$HOSTNAME/$HOSTNAME}" > $LAUNCHD_SCRIPT && script_conte
 echo 'Replace variables in launchd plist...'
 launchd_content=$(<$LAUNCHD_FILE.template)
 echo "${launchd_content//\$LAUNCHD_SCRIPT/$LAUNCHD_SCRIPT}" > $LAUNCHD_FILE && launchd_content=$(<$LAUNCHD_FILE)
-echo "${launchd_content//\$LAUNCHD_LOG/$LAUNCHD_LOG}" > $LAUNCHD_FILE && launchd_content=$(<$LAUNCHD_FILE)
+echo "${launchd_content//\$LAUNCHD_LOG_STD/$LAUNCHD_LOG_STD}" > $LAUNCHD_FILE && launchd_content=$(<$LAUNCHD_FILE)
+echo "${launchd_content//\$LAUNCHD_LOG_ERR/$LAUNCHD_LOG_ERR}" > $LAUNCHD_FILE && launchd_content=$(<$LAUNCHD_FILE)
 echo "${launchd_content//\$LAUNCHD_INTERVAL/$LAUNCHD_INTERVAL}" > $LAUNCHD_FILE && launchd_content=$(<$LAUNCHD_FILE)
 
-echo 'Emptying old launchd log...'
-echo '' > $LAUNCHD_LOG
+echo 'Emptying old launchd logs...'
+echo '' > $LAUNCHD_LOG_STD && echo '' > $LAUNCHD_LOG_ERR
 
 echo 'Set executing permissions in launchd file...'
 chmod +x $LAUNCHD_SCRIPT
@@ -85,7 +87,7 @@ echo "Set host name to $HOSTNAME..."
 sudo scutil --set HostName $HOSTNAME
 sudo scutil --set LocalHostName $HOSTNAME
 
-echo 'Set standby delay to 3 hours...'
+echo "Set standby delay to $STANDBY_DELAY hours..."
 sudo pmset -a standbydelay $STANDBY_DELAY
 
 echo 'Disable the sound effects on boot...'

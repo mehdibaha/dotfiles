@@ -5,25 +5,25 @@
 echo ---$(date +%F\ %X)---
 
 # GENERAL CLEANUPS
-{ find $HOME/.Trash -type f -atime +$TRASH_MAX_OLD -exec rm {} \;; } &> /dev/null
-{ /usr/bin/sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'; } &> /dev/null
-{ find $HOME -type f -name '*.DS_Store' -ls -delete; } &> /dev/null
-{ /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder; } &> /dev/null
+{ find $HOME/.Trash -type f -atime +$TRASH_MAX_OLD -exec sudo rm -f {} \;; }
+{ /usr/bin/sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'; }
+{ find $HOME -type f -name '*.DS_Store' -ls -delete; } 1> /dev/null
+{ /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder; }
 echo 'general cleanups completed...'
 
 # OLD SCREENSHOTS REMOVED
-{ find $SCREENSHOT_PATH/* -type f -atime +$SCREENSHOT_MAX_OLD -exec rm {} \;; } &> /dev/null
+{ find $SCREENSHOT_PATH/* -type f -atime +$SCREENSHOT_MAX_OLD -exec rm -f {} \;; }
 echo 'screenshots removed...'
 
 # APP UPDATES
-{ /usr/local/bin/brew update && /usr/local/bin/brew upgrade && /usr/local/bin/mas upgrade; } &> /dev/null
+{ /usr/local/bin/brew update && /usr/local/bin/brew upgrade && /usr/local/bin/mas upgrade; } >&2
 echo 'app updates completed...'
 
 # APP CLEANUPS
-{ /usr/local/bin/brew cleanup  && /usr/local/bin/brew cask cleanup; } &> /dev/null
+{ /usr/local/bin/brew cleanup  && /usr/local/bin/brew cask cleanup; } >&2
 echo 'app cleanups completed...'
 
 # SYNCING BACKUP
-{ /usr/local/bin/rclone sync --filter-from $RCLONE_FILTER --drive-use-trash=false --delete-excluded --log-level ERROR local:$HOME gdrive:$HOSTNAME ; } &> /dev/null
+{ /usr/local/bin/rclone sync --filter-from $RCLONE_FILTER --drive-use-trash=false --delete-excluded --log-level ERROR local:$HOME gdrive:$HOSTNAME ; } >&2
 echo 'backup completed...'
 echo ''
