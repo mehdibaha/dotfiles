@@ -39,7 +39,7 @@ LAUNCHD_FINAL="$LAUNCHD_FOLDER/local.plist"
 LAUNCHD_INTERVAL=43200 # Every half-day in seconds (60*60*6)
 
 # Rclone
-RCLONE_FILTER="$DOTFILES_DIR/os/rclone-filter.txt"
+RCLONE_FILTER="$DOTFILES_DIR/os/backup_filter.txt"
 RCLONE_REMOTE="gdrive"
 
 ###########################

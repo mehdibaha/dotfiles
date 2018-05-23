@@ -16,11 +16,11 @@ echo ""
 
 if [ "$(uname)" == "Darwin" ]; then
     echo "||--Install apps--||"
-    . "$DOTFILES_DIR/os/install_apps.sh"
+    . "$DOTFILES_DIR/os/macos_install.sh"
     echo ""
 
     echo "||--Settings--||"
-    . "$DOTFILES_DIR/os/settings.sh"
+    . "$DOTFILES_DIR/os/macos_settings.sh"
     echo ""
 fi
 

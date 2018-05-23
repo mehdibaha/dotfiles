@@ -13,7 +13,6 @@
 - *build/
 - vendor/
 - *.app/
-- epic/
 
 # Compiled source #
 ###################

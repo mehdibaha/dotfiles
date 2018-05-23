@@ -35,11 +35,11 @@ Clone the dotfiles with Git:
 
 * If you want to include installation of apps/recipes (common in new computers):
 
-        INSTALL_APPS=1 source ~/.dotfiles/boot.sh
+        INSTALL_APPS=1 source ~/.dotfiles/start.sh
 
 * If you're only making changes to the settings:
 
-        source ~/.dotfiles/boot.sh
+        source ~/.dotfiles/start.sh
 
 ### Backup (optional)
 
