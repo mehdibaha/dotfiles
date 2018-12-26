@@ -11,11 +11,16 @@ DOTFILES_DIR="$HOME/.dotfiles"
 COMPUTER_NAME="Mehdis-Air"
 HOSTNAME="Mehdis-Air"
 TIMEZONE="Europe/Paris"
+FIRST_LANG="en"
+SECOND_LANG="fr"
+LOCALE="en_US@currency=EUR"
+UNIT="Centimeters"
+
+# Sleep settings
 STANDBY_DELAY=10800 # 3*60*60
 HIBERNATE_MODE=3
 
 # Visual
-DOCK_APPS=("Spark" "Launchpad" "Utilities/Terminal" "Firefox" "Sublime Text")
 ICON_SIZE=50
 ICON_SPACING=100
 ICON_DOCK_SIZE=46
@@ -127,11 +132,6 @@ echo '--SSD-specific tweaks--'
 echo 'Set hibernate mode to 3...'
 sudo pmset -a hibernatemode $HIBERNATE_MODE
 
-echo '  Create a zero-byte file instead...'
-sudo touch /private/var/vm/sleepimage
-echo '  Making sure it can’t be rewritten...'
-sudo chflags uchg /private/var/vm/sleepimage
-
 echo 'Disable the sudden motion sensor...'
 sudo pmset -a sms 0 # Not useful for SSDs
 
@@ -156,9 +156,9 @@ defaults write NSGlobalDomain InitialKeyRepeat -int 12
 # Set language and text formats
 # Note: if you’re in the US, replace `EUR` with `USD`, `Centimeters` with
 # `Inches`, `en_GB` with `en_US`, and `true` with `false`.
-defaults write NSGlobalDomain AppleLanguages -array "en" "fr"
-defaults write NSGlobalDomain AppleLocale -string "en_US@currency=EUR"
-defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
+defaults write NSGlobalDomain AppleLanguages -array $FIRST_LANG $SECOND_LANG
+defaults write NSGlobalDomain AppleLocale -string $LOCALE
+defaults write NSGlobalDomain AppleMeasurementUnits -string $UNIT
 defaults write NSGlobalDomain AppleMetricUnits -bool true
 
 # Set the timezone; see `sudo systemsetup -listtimezones` for other values
@@ -361,26 +361,13 @@ defaults write com.apple.dock mru-spaces -bool false
 echo 'Make Dock icons of hidden applications translucent...'
 defaults write com.apple.dock showhidden -bool true
 
-echo 'Add dock items...'
-dockutil --no-restart --remove all
-for dock_app in "${DOCK_APPS[@]}"; do
-    echo "    Add '$dock_app' to dock..."
-    dockutil --no-restart --add "/Applications/${dock_app}.app" --position end
-done
-
 #################################
 # Killing affected applications
 #################################
 echo ''
 echo '--Kill affected applications--'
 
-for app in "Dock" "Activity Monitor" "Finder" "Spectacle"; do
+for app in "Activity Monitor" "Finder"; do
     echo "Kill ${app}..."
     killall "${app}" &> /dev/null
-done
-
-# Always cool to have those again
-for app in "Spectacle" "Dock"; do
-    echo "Open ${app}..."
-    open "/Applications/${app}.app" &> /dev/null
 done

@@ -3,27 +3,26 @@
 # Note: Putting absolute path because launchd doesn't recognize anything
 
 echo ---$(date +%F\ %X)---
+/usr/bin/osascript -e 'display notification "Launching script" with title "Daily script"'
 
 # GENERAL CLEANUPS
 { find $HOME/.Trash -type f -atime +$TRASH_MAX_OLD -exec sudo rm -f {} \;; }
 { /usr/bin/sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'; }
 { find $HOME -type f -name '*.DS_Store' -ls -delete; } 1> /dev/null
 { /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder; }
-echo 'general cleanups completed...'
 
 # OLD SCREENSHOTS REMOVED
 { find $SCREENSHOT_PATH/* -type f -atime +$SCREENSHOT_MAX_OLD -exec rm -f {} \;; }
-echo 'screenshots removed...'
+echo 'Cleanups completed'
+/usr/bin/osascript -e 'display notification "Cleanups completed" with title "Daily script"'
 
-# APP UPDATES
-{ /usr/local/bin/brew update && /usr/local/bin/brew upgrade && /usr/local/bin/mas upgrade; } >&2
-echo 'app updates completed...'
+# APP UPDATES/CLEANUPS
+{ /usr/local/bin/brew update && /usr/local/bin/brew upgrade && /usr/local/bin/mas upgrade && /usr/local/bin/brew cleanup; } >&2
+echo 'App updates completed'
+/usr/bin/osascript -e 'display notification "App updates completed" with title "Daily script"'
 
-# APP CLEANUPS
-{ /usr/local/bin/brew cleanup  && /usr/local/bin/brew cask cleanup; } >&2
-echo 'app cleanups completed...'
-
-# SYNCING BACKUP
-{ /usr/local/bin/rclone sync --filter-from $RCLONE_FILTER --drive-use-trash=false --delete-excluded --log-level ERROR local:$HOME gdrive:$HOSTNAME ; } >&2
-echo 'backup completed...'
+# BACKUP
+{ /usr/local/bin/rclone sync --skip-links --filter-from $RCLONE_FILTER --drive-use-trash=false --delete-excluded --log-level ERROR local:$HOME gdrive:$HOSTNAME ; } >&2
+echo 'backup completed'
 echo ''
+/usr/bin/osascript -e 'display notification "Backup completed" with title "Daily script"'

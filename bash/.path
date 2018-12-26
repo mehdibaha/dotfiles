@@ -1,1 +1,1 @@
-export PATH="./env/bin:$PATH" # local virtual environment
+

@@ -1,5 +1,24 @@
 {
 	"bootstrapped": true,
+	"downloader_precedence":
+	{
+		"linux":
+		[
+			"curl",
+			"wget",
+			"urllib"
+		],
+		"osx":
+		[
+			"curl",
+			"wget",
+			"urllib"
+		],
+		"windows":
+		[
+			"wininet"
+		]
+	},
 	"in_process_packages":
 	[
 	],
@@ -21,6 +40,7 @@
 		"Python Improved",
 		"SublimeAStyleFormatter",
 		"Terraform",
+		"TypeScript",
 		"Vue Syntax Highlight",
 		"VueFormatter",
 		"Vuejs Complete Package",

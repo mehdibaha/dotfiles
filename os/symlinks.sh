@@ -5,8 +5,6 @@ DOTFILES_DIR="$HOME/.dotfiles"
 
 echo "Symlinking .bash_profile to $HOME"
 ln -sf "$DOTFILES_DIR/bash/.bash_profile" ~
-echo "Symlinking .bash_profile to $HOME"
-ln -sf "$DOTFILES_DIR/bash/.bash_profile" ~
 echo "Symlinking .vimrc to $HOME"
 ln -sf "$DOTFILES_DIR/vim/.vimrc" ~
 echo "Symlinking .vim to $HOME"

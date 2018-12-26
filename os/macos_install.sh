@@ -4,9 +4,9 @@
 ##### Config Variables
 ###########################
 BREW_TAPS=(caskroom/cask heroku/brew)
-BREW_RECIPES=(bash mas coreutils git git-extras wget heroku mongodb openssl python python3 trash dockutil hub rclone)
-BREW_CASKS=(spectacle skype vlc docker the-unarchiver sublime-text firefox)
-MAC_APPS=(1176895641 410628904) # (Spark, Wunderlist)
+BREW_RECIPES=(bash coreutils git git-extras wget mas bat heroku mongodb openssl python trash rclone)
+BREW_CASKS=(spectacle skype vlc docker the-unarchiver sublime-text firefox google-backup-and-sync visual-studio-code)
+MAC_APPS=()
 
 ###########################
 ##### XCode
@@ -64,7 +64,6 @@ if [ -n "$INSTALL_APPS" ]; then
     echo '--Homebrew Cask--'
 
     echo 'Install cask recipes...'
-    brew cask info this-is-somewhat-annoying 2> /dev/null
 
     for cask in "${BREW_CASKS[@]}"; do
         # sublime-text -> sublime (for easier search in /Applications folder)

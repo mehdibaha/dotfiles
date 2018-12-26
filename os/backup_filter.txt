@@ -6,6 +6,8 @@
 - bin/
 - venv/
 - .Python/
+- .terraform/
+- __pycache__/
 - include/
 - node_modules/
 - bower_components/
@@ -26,6 +28,7 @@
 - *.log
 - *.dat
 - *.DS_Store
+- *.sqlite
 - NOOBS*
 
 # Main directories #

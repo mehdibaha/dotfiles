@@ -3,7 +3,7 @@
 	"auto_complete_commit_on_tab": true,
 	"auto_match_enabled": true,
 	"bold_folder_labels": true,
-	"color_scheme": "Packages/User/SublimeLinter/Monokai (SL).tmTheme",
+	"color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
 	"draw_indent_guides": true,
 	"ensure_newline_at_eof_on_save": true,
 	"extra_file_exclude_patterns":
@@ -58,6 +58,7 @@
 	"show_full_path": true,
 	"show_minimap": false,
 	"tab_size": 4,
+	"theme": "Default.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
 	"use_simple_full_screen": true
