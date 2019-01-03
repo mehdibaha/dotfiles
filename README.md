@@ -44,7 +44,7 @@ Clone the dotfiles with Git:
 ### Backup (optional)
 
 1. Add a remote storage and a local remote using `rclone config`, and make sure the scripts are set up properly for using your preferred remote solution
-2. Make sure rclone-related variables are properly set in [settings.sh](os/settings.sh)
+2. Make sure rclone-related variables are properly set in [settings.sh](os/macos_settings.sh)
 3. *Bonus*: If you want to test which files/folders will be included in each backup:
 
         rclone sync --dry-run --filter-from $RCLONE_FILTER local:$HOME gdrive:$HOSTNAME
