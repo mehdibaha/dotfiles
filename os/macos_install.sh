@@ -5,7 +5,7 @@
 ###########################
 BREW_TAPS=(caskroom/cask heroku/brew)
 BREW_RECIPES=(bash coreutils git git-extras wget mas bat heroku mongodb openssl python trash rclone)
-BREW_CASKS=(spectacle skype vlc docker the-unarchiver sublime-text firefox google-backup-and-sync visual-studio-code)
+BREW_CASKS=(spectacle skype vlc docker the-unarchiver sublime-text firefox google-backup-and-sync)
 MAC_APPS=()
 
 ###########################
