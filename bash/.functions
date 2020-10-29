@@ -19,16 +19,6 @@ o ()
     fi
 }
 
-# Quick deploy to heroku
-hdep ()
-{
-    if [ $# -eq 0 ]; then
-        echo "Error: no deploy message found.";
-    else
-        git add . && gc "$@" && git ps origin master && hpromote || git ps origin master && hpromote
-    fi
-}
-
 function reload_audio() {
     sudo kextunload /System/Library/Extensions/AppleHDA.kext
     sudo kextload /System/Library/Extensions/AppleHDA.kext
