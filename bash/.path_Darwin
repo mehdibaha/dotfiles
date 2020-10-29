@@ -1,4 +1,2 @@
 export PATH="/usr/local/sbin:$PATH" # Tuxera NTFS
 export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH" # core-utils
-export PATH="/usr/local/opt/go@1.4/bin:$PATH" # enable Go 1.4
-export PATH="/usr/local/opt/etcher-cli:$PATH" # etcher-cli
