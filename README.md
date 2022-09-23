@@ -34,11 +34,11 @@ Clone the dotfiles with Git:
 
 * If you want to include installation of apps/recipes (common in new computers):
 
-        INSTALL_APPS=1 source ~/.dotfiles/start.sh
+        INSTALL_APPS=1 source ~/.dotfiles/start.sh # in bash terminal
 
 * If you're only making changes to the settings:
 
-        source ~/.dotfiles/start.sh
+        source ~/.dotfiles/start.sh # in bash terminal
 
 ## Credits
 
