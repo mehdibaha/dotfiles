@@ -20,9 +20,3 @@ echo 'Cleanups completed'
 { /usr/local/bin/brew update && /usr/local/bin/brew upgrade && /usr/local/bin/mas upgrade && /usr/local/bin/brew cleanup; } >&2
 echo 'App updates completed'
 /usr/bin/osascript -e 'display notification "App updates completed" with title "Daily script"'
-
-# BACKUP
-{ /usr/local/bin/rclone sync --skip-links --filter-from $RCLONE_FILTER --drive-use-trash=false --delete-excluded --log-level ERROR local:$HOME gdrive:$HOSTNAME ; } >&2
-echo 'backup completed'
-echo ''
-/usr/bin/osascript -e 'display notification "Backup completed" with title "Daily script"'
