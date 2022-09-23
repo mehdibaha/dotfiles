@@ -5,7 +5,7 @@
 ###########################
 BREW_TAPS=(caskroom/cask heroku/brew)
 BREW_RECIPES=(bash coreutils git git-extras wget mas bat heroku mongodb openssl python trash)
-BREW_CASKS=(spectacle vlc docker firefox google-drive postico spotify)
+BREW_CASKS=(spectacle vlc docker firefox google-drive postico spotify visual-studio-code)
 MAC_APPS=()
 
 ###########################
