@@ -5,7 +5,6 @@ alias cod='cd ~/Documents/coding'
 
 # Applications
 alias cat='bat'
-alias s='subl'
 
 # Recursively delete `.DS_Store` files
 alias dsstore="find . -type f -name '*.DS_Store' -ls -delete"
