@@ -8,8 +8,8 @@ DOTFILES_DIR="$HOME/.dotfiles"
 ###########################
 
 # Computer
-COMPUTER_NAME="Mehdis-Air"
-HOSTNAME="Mehdis-Air"
+COMPUTER_NAME="Mehdis-Pro"
+HOSTNAME="Mehdis-Pro"
 TIMEZONE="Europe/Paris"
 FIRST_LANG="en"
 SECOND_LANG="fr"
@@ -43,10 +43,6 @@ LAUNCHD_FILE="$DOTFILES_DIR/launchd/local.plist"
 LAUNCHD_FOLDER="$HOME/Library/LaunchAgents"
 LAUNCHD_FINAL="$LAUNCHD_FOLDER/local.plist"
 LAUNCHD_INTERVAL=43200 # Every half-day in seconds (60*60*6)
-
-# Rclone
-RCLONE_FILTER="$DOTFILES_DIR/os/backup_filter.txt"
-RCLONE_REMOTE="gdrive"
 
 ###########################
 ##### Launchd
