@@ -16,5 +16,6 @@ ln -sf "$DOTFILES_DIR/git/.gitignore_global" ~
 
 if [ "$(uname)" == "Darwin" ]; then
     echo "Symlinking spectacle.json to $HOME/Library/Application Support/Spectacle/Shortcuts.json"
+    mkdir -p "$HOME/Library/Application Support/Spectacle/Shortcuts.json"
     ln -sf "$DOTFILES_DIR/apps/spectacle/spectacle.json" "$HOME/Library/Application Support/Spectacle/Shortcuts.json"
 fi
