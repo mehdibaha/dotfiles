@@ -7,7 +7,7 @@ Most of the features are targeted to macOS systems, but the dotfiles are fully c
 ## Overview
 
 * Install brew/casks/macOS apps
-* Setup settings for macOS and apps (Dock positions, Sublime Text, Spectacle)
+* Setup settings for macOS and apps (Dock positions, Spectacle)
 * Symlink dotfiles (bash_profile, vim, gitconfig...)
 * Setup periodic script w/ native launchd (for: backups, cleanups, updates...)
 
@@ -17,13 +17,12 @@ Most of the features are targeted to macOS systems, but the dotfiles are fully c
     * **basics**: bash, coreutils, git
     * **utilities**: tree, wget, openssl
     * **binaries**: python, heroku, mongodb
-    * **extras**: mas, trash, dockutil, hub
+    * **extras**: mas, trash
 
 * [Casks](https://caskroom.github.io) + [macOS apps](https://github.com/mas-cli/mas)
-    * **utilities**: Spectacle, The Unarchiver
-    * **extras**:  Skype, VLC
-    * **dev stuff**: Docker, Sublime Text
-    * **email**: Spark
+    * **utilities**: Spectacle
+    * **extras**:  VLC
+    * **dev stuff**: Docker, VS Code
 
 ## Install
 
@@ -40,14 +39,6 @@ Clone the dotfiles with Git:
 * If you're only making changes to the settings:
 
         source ~/.dotfiles/start.sh
-
-### Backup (optional)
-
-1. Add a remote storage and a local remote using `rclone config`, and make sure the scripts are set up properly for using your preferred remote solution
-2. Make sure rclone-related variables are properly set in [settings.sh](os/macos_settings.sh)
-3. *Bonus*: If you want to test which files/folders will be included in each backup:
-
-        rclone sync --dry-run --filter-from $RCLONE_FILTER local:$HOME gdrive:$HOSTNAME
 
 ## Credits
 
