@@ -15,8 +15,6 @@ echo "Symlinking .gitignore_global to $HOME"
 ln -sf "$DOTFILES_DIR/git/.gitignore_global" ~
 
 if [ "$(uname)" == "Darwin" ]; then
-    echo "Symlinking sublime settings to $HOME/Library/Application Support/Sublime Text 3/Packages/User"
-    ln -sf "$DOTFILES_DIR/apps/sublime/User" "$HOME/Library/Application Support/Sublime Text 3/Packages/"
     echo "Symlinking spectacle.json to $HOME/Library/Application Support/Spectacle/Shortcuts.json"
     ln -sf "$DOTFILES_DIR/apps/spectacle/spectacle.json" "$HOME/Library/Application Support/Spectacle/Shortcuts.json"
 fi
