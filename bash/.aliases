@@ -2,7 +2,7 @@
 alias reload='source ~/.bash_profile'
 
 # List all files in colorized, long format
-alias ls="ls --color --group-directories-first"
+alias ls="gls --color --group-directories-first"
 alias l="ls -lAh"
 
 # Easier navigation
