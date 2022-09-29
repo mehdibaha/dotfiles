@@ -66,16 +66,14 @@ if [ -n "$INSTALL_APPS" ]; then
     echo 'Install cask recipes...'
 
     for cask in "${BREW_CASKS[@]}"; do
-        # sublime-text -> sublime (for easier search in /Applications folder)
-        search=$(cut -d '-' -f 1 <<< "$cask")
         if [[ ! "$(find /Applications -maxdepth 2 | grep -i $search)" ]]; then
             echo "    Install $cask..."
-            brew cask install $cask &> /dev/null
+            brew install --cask $cask &> /dev/null
         fi
     done
 
     echo 'Cleanup Homebrew Cask...'
-    { brew cask cleanup; } &> /dev/null
+    { brew cleanup --cask; } &> /dev/null
 
     ###########################
     ##### MacOS Apps
