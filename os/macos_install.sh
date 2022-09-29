@@ -66,6 +66,7 @@ if [ -n "$INSTALL_APPS" ]; then
     echo 'Install cask recipes...'
 
     for cask in "${BREW_CASKS[@]}"; do
+        search=$(cut -d '-' -f 1 <<< "$cask")
         if [[ ! "$(find /Applications -maxdepth 2 | grep -i $search)" ]]; then
             echo "    Install $cask..."
             brew install --cask $cask
