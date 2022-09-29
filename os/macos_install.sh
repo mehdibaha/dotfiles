@@ -3,7 +3,7 @@
 ###########################
 ##### Config Variables
 ###########################
-BREW_TAPS=(caskroom/cask heroku/brew)
+BREW_TAPS=(heroku/brew)
 BREW_RECIPES=(bash coreutils git git-extras wget mas bat heroku mongodb openssl python trash awscli logitech-options)
 BREW_CASKS=(spectacle vlc docker firefox google-drive spotify visual-studio-code tunnelblick itsycal)
 MAC_APPS=()
