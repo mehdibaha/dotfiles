@@ -5,7 +5,7 @@
 ###########################
 BREW_TAPS=(homebrew/cask-drivers heroku/brew mongodb/brew)
 BREW_RECIPES=(bash coreutils git mongodb-community git-extras wget mas bat heroku openssl python trash awscli logitech-options)
-BREW_CASKS=(spectacle vlc firefox google-drive spotify visual-studio-code tunnelblick itsycal)
+BREW_CASKS=(rectangle vlc firefox google-drive spotify visual-studio-code tunnelblick itsycal)
 MAC_APPS=()
 
 ###########################
