@@ -232,15 +232,6 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict \
     Privileges -bool true
 
 ###########################
-# Spotlight
-###########################
-echo ''
-echo '--Spotlight--'
-
-echo 'Disable Spotlight indexing for never undexed volumes...'
-sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
-
-###########################
 # Activity Monitor
 ###########################
 echo ''
