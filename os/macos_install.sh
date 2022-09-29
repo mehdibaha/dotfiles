@@ -74,7 +74,7 @@ if [ -n "$INSTALL_APPS" ]; then
     done
 
     echo 'Cleanup Homebrew Cask...'
-    { brew cleanup --cask; }
+    { brew cleanup --prune=all; }
 
     ###########################
     ##### MacOS Apps
