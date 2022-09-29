@@ -53,9 +53,6 @@ sudo pmset -a standbydelay $STANDBY_DELAY
 echo 'Disable the sound effects on boot...'
 sudo nvram SystemAudioVolume=" "
 
-echo 'Disable transparency in the menu bar and elsewhere on Yosemite...'
-defaults write com.apple.universalaccess reduceTransparency -bool false
-
 echo 'Disable the “Are you sure you want to open this application?” dialog'
 defaults write com.apple.LaunchServices LSQuarantine -bool false
 
@@ -115,9 +112,6 @@ defaults write NSGlobalDomain AppleLanguages -array $FIRST_LANG $SECOND_LANG
 defaults write NSGlobalDomain AppleLocale -string $LOCALE
 defaults write NSGlobalDomain AppleMeasurementUnits -string $UNIT
 defaults write NSGlobalDomain AppleMetricUnits -bool true
-
-# Set the timezone; see `sudo systemsetup -listtimezones` for other values
-sudo systemsetup -settimezone $TIMEZONE > /dev/null
 
 echo 'Stop iTunes from responding to the keyboard media keys...'
 launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null
