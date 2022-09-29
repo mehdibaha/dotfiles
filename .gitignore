@@ -4,8 +4,5 @@
 # Ignore files with real env vars
 local.plist
 script.sh
+*.env
 
-# Sublime-specific files
-*.cache
-*ca-bundle*
-*last-run*
