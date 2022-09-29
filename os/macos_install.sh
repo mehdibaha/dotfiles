@@ -41,7 +41,7 @@ if [ -n "$INSTALL_APPS" ]; then
     for tap in "${BREW_TAPS[@]}"; do
         if [[ ! "$(echo $current_taps | grep -i $tap)" ]]; then
             echo "    Install $tap..."
-            brew install $tap
+            brew tap $tap
         fi
     done
 
