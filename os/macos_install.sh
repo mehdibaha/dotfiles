@@ -41,7 +41,7 @@ if [ -n "$INSTALL_APPS" ]; then
     for tap in "${BREW_TAPS[@]}"; do
         if [[ ! "$(echo $current_taps | grep -i $tap)" ]]; then
             echo "    Install $tap..."
-            brew tap $tap
+            brew tap $tap &> /dev/null
         fi
     done
 
@@ -50,7 +50,7 @@ if [ -n "$INSTALL_APPS" ]; then
     for recipe in "${BREW_RECIPES[@]}"; do
         if [[ ! "$(echo $current_recipes | grep -i $recipe)" ]]; then
             echo "    Install $recipe..."
-            brew install $recipe
+            brew install $recipe &> /dev/null
         fi
     done
 
@@ -69,12 +69,12 @@ if [ -n "$INSTALL_APPS" ]; then
         search=$(cut -d '-' -f 1 <<< "$cask")
         if [[ ! "$(find /Applications -maxdepth 2 | grep -i $search)" ]]; then
             echo "    Install $cask..."
-            brew install --cask $cask
+            brew install --cask $cask &> /dev/null
         fi
     done
 
     echo 'Cleanup Homebrew Cask...'
-    { brew cleanup --cask; }
+    { brew cleanup --cask; } &> /dev/null
 
     ###########################
     ##### MacOS Apps
@@ -87,10 +87,10 @@ if [ -n "$INSTALL_APPS" ]; then
     for app in "${MAC_APPS[@]}"; do
         if [[ ! "$(echo $current_apps | grep -i $app)" ]]; then
             echo "    Install $app..."
-            mas install $app
+            mas install $app &> /dev/null
         fi
     done
 
     echo 'Upgrade MacOS apps...'
-    mas upgrade
+    mas upgrade &> /dev/null
 fi
