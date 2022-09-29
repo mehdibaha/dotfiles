@@ -35,47 +35,6 @@ SCREENSHOT_PATH="$HOME/Documents/screenshots"
 SCREENSHOT_FORMAT="png"
 SCREENSHOT_MAX_OLD=3 # delete 3 days old screenshots
 
-# Launchd
-LAUNCHD_LOG_STD="$HOME/.launchd.log.std"
-LAUNCHD_LOG_ERR="$HOME/.launchd.log.err"
-LAUNCHD_SCRIPT="$DOTFILES_DIR/launchd/script.sh"
-LAUNCHD_FILE="$DOTFILES_DIR/launchd/local.plist"
-LAUNCHD_FOLDER="$HOME/Library/LaunchAgents"
-LAUNCHD_FINAL="$LAUNCHD_FOLDER/local.plist"
-LAUNCHD_INTERVAL=43200 # Every half-day in seconds (60*60*6)
-
-###########################
-##### Launchd
-###########################
-echo '--Launchd--'
-
-echo 'Replace variables in launchd script...'
-script_content=$(<$LAUNCHD_SCRIPT.template)
-echo "${script_content//\$HOME/$HOME}" > $LAUNCHD_SCRIPT && script_content=$(<$LAUNCHD_SCRIPT)
-echo "${script_content//\$TRASH_MAX_OLD/$TRASH_MAX_OLD}" > $LAUNCHD_SCRIPT && script_content=$(<$LAUNCHD_SCRIPT)
-echo "${script_content//\$SCREENSHOT_PATH/$SCREENSHOT_PATH}" > $LAUNCHD_SCRIPT && script_content=$(<$LAUNCHD_SCRIPT)
-echo "${script_content//\$SCREENSHOT_MAX_OLD/$SCREENSHOT_MAX_OLD}" > $LAUNCHD_SCRIPT && script_content=$(<$LAUNCHD_SCRIPT)
-echo "${script_content//\$RCLONE_FILTER/$RCLONE_FILTER}" > $LAUNCHD_SCRIPT && script_content=$(<$LAUNCHD_SCRIPT)
-echo "${script_content//\$RCLONE_REMOTE/$RCLONE_REMOTE}" > $LAUNCHD_SCRIPT && script_content=$(<$LAUNCHD_SCRIPT)
-echo "${script_content//\$HOSTNAME/$HOSTNAME}" > $LAUNCHD_SCRIPT && script_content=$(<$LAUNCHD_SCRIPT)
-
-echo 'Replace variables in launchd plist...'
-launchd_content=$(<$LAUNCHD_FILE.template)
-echo "${launchd_content//\$LAUNCHD_SCRIPT/$LAUNCHD_SCRIPT}" > $LAUNCHD_FILE && launchd_content=$(<$LAUNCHD_FILE)
-echo "${launchd_content//\$LAUNCHD_LOG_STD/$LAUNCHD_LOG_STD}" > $LAUNCHD_FILE && launchd_content=$(<$LAUNCHD_FILE)
-echo "${launchd_content//\$LAUNCHD_LOG_ERR/$LAUNCHD_LOG_ERR}" > $LAUNCHD_FILE && launchd_content=$(<$LAUNCHD_FILE)
-echo "${launchd_content//\$LAUNCHD_INTERVAL/$LAUNCHD_INTERVAL}" > $LAUNCHD_FILE && launchd_content=$(<$LAUNCHD_FILE)
-
-echo 'Emptying old launchd logs...'
-echo '' > $LAUNCHD_LOG_STD && echo '' > $LAUNCHD_LOG_ERR
-
-echo 'Set executing permissions in launchd file...'
-chmod +x $LAUNCHD_SCRIPT
-
-echo 'Set launchd file...'
-ln -sf $LAUNCHD_FILE $LAUNCHD_FOLDER
-launchctl unload "$LAUNCHD_FINAL" && launchctl load "$LAUNCHD_FINAL"
-
 ###########################
 ##### General UI/UX
 ###########################
