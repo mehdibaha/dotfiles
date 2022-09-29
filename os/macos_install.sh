@@ -54,9 +54,6 @@ if [ -n "$INSTALL_APPS" ]; then
         fi
     done
 
-    echo 'Update/Upgrade/Prune Homebrew...'
-    { brew update && brew upgrade && brew prune; }
-
     ###########################
     ##### Homebrew Cask
     ###########################
@@ -73,8 +70,8 @@ if [ -n "$INSTALL_APPS" ]; then
         fi
     done
 
-    echo 'Cleanup Homebrew Cask...'
-    { brew cleanup --prune=all; }
+    echo 'Update/Upgrade/Prune Homebrew...'
+    { brew update && brew upgrade && brew cleanup --prune=all; }
 
     ###########################
     ##### MacOS Apps
