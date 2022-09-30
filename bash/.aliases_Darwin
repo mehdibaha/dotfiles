@@ -1,8 +1,3 @@
-# Cd to personalized dirs
-alias doc='cd ~/Documents'
-alias dow='cd ~/Downloads'
-alias cod='cd ~/Documents/coding'
-
 # Applications
 alias cat='bat'
 

@@ -9,6 +9,7 @@ alias l="ls -lAh"
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+alias cc="code ."
 
 # Applications
 alias scp='scp -r' # Copy dirs too when scp
