@@ -7,7 +7,7 @@ Most of the features are targeted to macOS systems, but the dotfiles are fully c
 ## Overview
 
 * Install brew/casks/macOS apps
-* Setup settings for macOS and apps (Dock positions, Spectacle)
+* Setup settings for macOS and apps (Dock positions, Rectangle)
 * Symlink dotfiles (bash_profile, vim, gitconfig...)
 * Setup periodic script w/ native launchd (for: backups, cleanups, updates...)
 
@@ -20,8 +20,7 @@ Most of the features are targeted to macOS systems, but the dotfiles are fully c
     * **extras**: mas, trash
 
 * [Casks](https://caskroom.github.io) + [macOS apps](https://github.com/mas-cli/mas)
-    * **utilities**: Spectacle
-    * **extras**:  VLC
+    * **utilities**: Rectangle
     * **dev stuff**: Docker, VS Code
 
 ## Install

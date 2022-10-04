@@ -31,7 +31,7 @@ FINDER_DEFAULT_PATH="$HOME/Documents"
 TRASH_MAX_OLD=10 # delete 10-day old files in trash
 
 # Screenshots
-SCREENSHOT_PATH="$HOME/Documents/screenshots"
+SCREENSHOT_PATH="$HOME/Documents/4. Screenshots"
 SCREENSHOT_FORMAT="png"
 SCREENSHOT_MAX_OLD=3 # delete 3 days old screenshots
 
