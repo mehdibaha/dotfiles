@@ -129,6 +129,7 @@ echo 'Disable shadow in screenshots...'
 defaults write com.apple.screencapture disable-shadow -bool true
 
 echo 'Change default screenshots folder...'
+mkdir $SCREENSHOT_PATH
 defaults write com.apple.screencapture location -string $SCREENSHOT_PATH
 
 ###########################
@@ -147,10 +148,10 @@ echo 'Set new finder default directory...'
 defaults write com.apple.finder NewWindowTargetPath -string "file://$FINDER_DEFAULT_PATH/"
 
 echo 'Show icons for hard drives, servers, and removable media on the desktop...'
-defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
+defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool false
 defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true
-defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
-defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
+defaults write com.apple.finder ShowMountedServersOnDesktop -bool false
+defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool false
 
 echo 'Show all filename extensions...'
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true
@@ -160,9 +161,6 @@ defaults write com.apple.finder ShowStatusBar -bool false
 
 echo 'Show path bar...'
 defaults write com.apple.finder ShowPathbar -bool false
-
-echo 'Enable full POSIX path as Finder window title...'
-defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 
 echo 'Disable the warning when changing a file extension...'
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
