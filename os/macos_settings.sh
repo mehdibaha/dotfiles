@@ -31,7 +31,7 @@ FINDER_DEFAULT_PATH="$HOME/Documents"
 TRASH_MAX_OLD=10 # delete 10-day old files in trash
 
 # Screenshots
-SCREENSHOT_PATH="$HOME/Documents/4. Screenshots"
+SCREENSHOT_PATH="$HOME/Documents/04_Screenshots"
 SCREENSHOT_FORMAT="png"
 SCREENSHOT_MAX_OLD=3 # delete 3 days old screenshots
 
@@ -54,7 +54,7 @@ echo 'Disable the sound effects on boot...'
 sudo nvram SystemAudioVolume=" "
 
 echo 'Disable transparency in the menu bar and elsewhere on Yosemite'
-defaults write com.apple.universalaccess reduceTransparency -bool true
+sudo defaults write com.apple.universalaccess reduceTransparency -bool true
 
 echo 'Disable the “Are you sure you want to open this application?” dialog'
 defaults write com.apple.LaunchServices LSQuarantine -bool false
@@ -94,9 +94,6 @@ sudo pmset -a lidwake 1
 echo 'Restart automatically on power loss...'
 sudo pmset -a autorestart 1
 
-echo 'Restart automatically if the computer freezes...'
-sudo systemsetup -setrestartfreeze on
-
 echo 'Sleep the display after 15 minutes...'
 sudo pmset -a displaysleep 15
 
@@ -105,9 +102,6 @@ sudo pmset -c sleep 0
 
 echo 'Set machine sleep to 5 minutes on battery...'
 sudo pmset -b sleep 5
-
-echo 'Never go into computer sleep mode...'
-sudo systemsetup -setcomputersleep Off > /dev/null
 
 # Hibernation mode
 # 0: Disable hibernation (speeds up entering sleep mode)
