@@ -32,11 +32,11 @@ Open a terminal, configure it to open with `/bin/bash` then clone this repo:
 
 * If you want to include installation of apps/recipes (common in new computers):
 
-        INSTALL_APPS=1 set -- -f; source ~/.dotfiles/start.sh
+        INSTALL_APPS=1 source ~/.dotfiles/start.sh
 
 * If you're only making changes to the settings:
 
-        set -- -f; source ~/.dotfiles/start.sh
+        source ~/.dotfiles/start.sh
 
 ## Credits
 
