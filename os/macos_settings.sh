@@ -88,21 +88,6 @@ defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 echo ''
 echo '--Energy saving--'
 
-echo 'Enable lid wakeup...'
-sudo pmset -a lidwake 1
-
-echo 'Restart automatically on power loss...'
-sudo pmset -a autorestart 1
-
-echo 'Sleep the display after 15 minutes...'
-sudo pmset -a displaysleep 15
-
-echo 'Disable machine sleep while charging...'
-sudo pmset -c sleep 0
-
-echo 'Set machine sleep to 5 minutes on battery...'
-sudo pmset -b sleep 5
-
 # Hibernation mode
 # 0: Disable hibernation (speeds up entering sleep mode)
 # 3: Copy RAM to disk so the system state can still be restored in case of a
@@ -131,8 +116,8 @@ echo 'Disable press-and-hold for keys in favor of key repeat...'
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
 echo 'Set a blazingly fast keyboard repeat rate...'
-defaults write NSGlobalDomain KeyRepeat -int 1
-defaults write NSGlobalDomain InitialKeyRepeat -int 10
+sudo defaults write NSGlobalDomain KeyRepeat -int 1
+sudo defaults write NSGlobalDomain InitialKeyRepeat -int 10
 
 # Set language and text formats
 # Note: if you’re in the US, replace `EUR` with `USD`, `Centimeters` with
