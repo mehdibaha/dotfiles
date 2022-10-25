@@ -21,5 +21,8 @@ shopt -s histappend
 # Autocorrect typos in path names when using `cd`
 shopt -s cdspell
 
+# Case-insensitive globbing (used in pathname expansion)
+shopt -s nocaseglob;
+
 # Change colors
 export LS_COLORS='di=01;33'

@@ -9,7 +9,6 @@ Most of the features are targeted to macOS systems, but the dotfiles are fully c
 * Install brew/casks/macOS apps
 * Setup settings for macOS and apps (Dock positions, Rectangle)
 * Symlink dotfiles (bash_profile, vim, gitconfig...)
-* Setup periodic script w/ native launchd (for: backups, cleanups, updates...)
 
 ### Packages
 
@@ -21,11 +20,11 @@ Most of the features are targeted to macOS systems, but the dotfiles are fully c
 
 * [Casks](https://caskroom.github.io) + [macOS apps](https://github.com/mas-cli/mas)
     * **utilities**: Rectangle
-    * **dev stuff**: Docker, VS Code
+    * **dev stuff**: Docker, Visual Studio Code
 
 ## Install
 
-Clone the dotfiles with Git:
+Open a terminal, configure it to open with */bin/bash* then clone this repo:
 
     git clone https://github.com/mehdibaha/dotfiles.git ~/.dotfiles
 
@@ -33,11 +32,11 @@ Clone the dotfiles with Git:
 
 * If you want to include installation of apps/recipes (common in new computers):
 
-        INSTALL_APPS=1 source ~/.dotfiles/start.sh # in bash terminal
+        INSTALL_APPS=1 set -- -f; source ~/.dotfiles/start.sh
 
 * If you're only making changes to the settings:
 
-        source ~/.dotfiles/start.sh # in bash terminal
+        set -- -f; source ~/.dotfiles/start.sh
 
 ## Credits
 

@@ -3,13 +3,11 @@
 # Setting dotfiles dir
 DOTFILES_DIR="$HOME/.dotfiles"
 
-echo "Symlinking .bash_profile to $HOME"
+echo "Symlinking files..."
 ln -sf "$DOTFILES_DIR/bash/.bash_profile" ~
-echo "Symlinking .vimrc to $HOME"
 ln -sf "$DOTFILES_DIR/vim/.vimrc" ~
-echo "Symlinking .vim to $HOME"
 ln -sf "$DOTFILES_DIR/vim/.vim" ~
-echo "Symlinking .gitconfig to $HOME"
 ln -sf "$DOTFILES_DIR/git/.gitconfig" ~
-echo "Symlinking .gitignore_global to $HOME"
 ln -sf "$DOTFILES_DIR/git/.gitignore_global" ~
+ln -sf "$DOTFILES_DIR/.hushlogin" ~
+ln -sf "$DOTFILES_DIR/.editorconfig" ~

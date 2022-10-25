@@ -17,7 +17,7 @@ LOCALE="en_US@currency=EUR"
 UNIT="Centimeters"
 
 # Sleep settings
-STANDBY_DELAY=10800 # 3*60*60
+STANDBY_DELAY=86400 # 24*60*60
 HIBERNATE_MODE=3
 
 # Visual
@@ -53,6 +53,9 @@ sudo pmset -a standbydelay $STANDBY_DELAY
 echo 'Disable the sound effects on boot...'
 sudo nvram SystemAudioVolume=" "
 
+echo 'Disable transparency in the menu bar and elsewhere on Yosemite'
+defaults write com.apple.universalaccess reduceTransparency -bool true
+
 echo 'Disable the “Are you sure you want to open this application?” dialog'
 defaults write com.apple.LaunchServices LSQuarantine -bool false
 
@@ -73,19 +76,51 @@ defaults write com.apple.systempreferences NSQuitAlwaysKeepsWindows -bool false
 echo 'Enable automatic termination of inactive apps...'
 defaults write NSGlobalDomain NSDisableAutomaticTermination -bool false
 
+echo 'Disable smart quotes as they’re annoying when typing code...'
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+
+echo 'Disable auto-correct...'
+defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+
 ###########################
-##### SSD-specific tweaks
+##### Energy saving 
 ###########################
 echo ''
-echo '--SSD-specific tweaks--'
+echo '--Energy saving--'
 
-# Faster sleeps, faster wakes, but less battery life
-# For more info: https://superuser.com/a/62677
-echo 'Set hibernate mode to 3...'
+echo 'Enable lid wakeup...'
+sudo pmset -a lidwake 1
+
+echo 'Restart automatically on power loss...'
+sudo pmset -a autorestart 1
+
+echo 'Restart automatically if the computer freezes...'
+sudo systemsetup -setrestartfreeze on
+
+echo 'Sleep the display after 15 minutes...'
+sudo pmset -a displaysleep 15
+
+echo 'Disable machine sleep while charging...'
+sudo pmset -c sleep 0
+
+echo 'Set machine sleep to 5 minutes on battery...'
+sudo pmset -b sleep 5
+
+echo 'Never go into computer sleep mode...'
+sudo systemsetup -setcomputersleep Off > /dev/null
+
+# Hibernation mode
+# 0: Disable hibernation (speeds up entering sleep mode)
+# 3: Copy RAM to disk so the system state can still be restored in case of a
+#    power failure.
 sudo pmset -a hibernatemode $HIBERNATE_MODE
 
-echo 'Disable the sudden motion sensor...'
-sudo pmset -a sms 0 # Not useful for SSDs
+# Remove the sleep image file to save disk space
+sudo rm /private/var/vm/sleepimage
+# Create a zero-byte file instead…
+sudo touch /private/var/vm/sleepimage
+# …and make sure it can’t be rewritten
+sudo chflags uchg /private/var/vm/sleepimage
 
 ###################################################################
 ##### Trackpad, mouse, keyboard, Bluetooth accessories, and input
@@ -102,8 +137,8 @@ echo 'Disable press-and-hold for keys in favor of key repeat...'
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
 echo 'Set a blazingly fast keyboard repeat rate...'
-defaults write NSGlobalDomain KeyRepeat -int 2
-defaults write NSGlobalDomain InitialKeyRepeat -int 12
+defaults write NSGlobalDomain KeyRepeat -int 1
+defaults write NSGlobalDomain InitialKeyRepeat -int 10
 
 # Set language and text formats
 # Note: if you’re in the US, replace `EUR` with `USD`, `Centimeters` with
@@ -112,15 +147,13 @@ defaults write NSGlobalDomain AppleLanguages -array $FIRST_LANG $SECOND_LANG
 defaults write NSGlobalDomain AppleLocale -string $LOCALE
 defaults write NSGlobalDomain AppleMeasurementUnits -string $UNIT
 defaults write NSGlobalDomain AppleMetricUnits -bool true
-
-echo 'Stop iTunes from responding to the keyboard media keys...'
-launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null
+sudo systemsetup -settimezone $TIMEZONE > /dev/null
 
 ###########################
 # Screen
 ###########################
 echo ''
-echo '--Finder--'
+echo '--Screen--'
 
 echo 'Save screenshots in PNG format...'
 defaults write com.apple.screencapture type -string $SCREENSHOT_FORMAT

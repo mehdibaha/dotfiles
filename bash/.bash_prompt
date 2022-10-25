@@ -3,7 +3,7 @@
 # [(env)] user@host:~ [branch]
 # ping google.com
 
-parse_git_branch ()
+parse_git_branch()
 {
     local OUT=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`;
     if [ "$OUT" != "" ]; then
@@ -24,7 +24,7 @@ _bash_prompt_config() {
     P_DOT=$':'
 }
 
-bash_prompt_command ()
+bash_prompt_command()
 {
     local P_EXIT="";
     local MAXLENGTH=50;
@@ -61,7 +61,7 @@ if $SHELL_BASH; then
     PROMPT_COMMAND=bash_prompt_command
 else
     # Assume zsh
-    function precmd {
+    function precmd{
         bash_prompt_command
     }
 fi

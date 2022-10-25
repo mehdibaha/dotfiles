@@ -1,2 +1,8 @@
-# Link Homebrew casks in '/Applications' rather than '~/Applications'
-export HOMEBREW_CASK_OPTS='--appdir=/Applications'
+# Homebrew
+export HOMEBREW_PREFIX="/opt/homebrew";
+export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
+export HOMEBREW_REPOSITORY="/opt/homebrew";
+export HOMEBREW_CASK_OPTS='--appdir=/Applications';
+
+# Hide the “default interactive shell is now zsh” warning on macOS.
+export BASH_SILENCE_DEPRECATION_WARNING=1;
