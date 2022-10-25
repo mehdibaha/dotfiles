@@ -24,7 +24,7 @@ Most of the features are targeted to macOS systems, but the dotfiles are fully c
 
 ## Install
 
-Open a terminal, configure it to open with */bin/bash* then clone this repo:
+Open a terminal, configure it to open with `/bin/bash` then clone this repo:
 
     git clone https://github.com/mehdibaha/dotfiles.git ~/.dotfiles
 
