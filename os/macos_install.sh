@@ -4,8 +4,8 @@
 ##### Config Variables
 ###########################
 BREW_TAPS=(homebrew/cask-drivers heroku/brew)
-BREW_RECIPES=(bash coreutils git git-extras wget mas bat postgresql heroku openssl python trash awscli logitech-options)
-BREW_CASKS=(rectangle firefox google-drive visual-studio-code tunnelblick itsycal)
+BREW_RECIPES=(bash coreutils git git-extras wget mas bat heroku openssl python trash awscli postgresql rabbitmq)
+BREW_CASKS=(rectangle firefox google-drive visual-studio-code tunnelblick itsycal logitech-options)
 MAC_APPS=()
 
 ###########################
