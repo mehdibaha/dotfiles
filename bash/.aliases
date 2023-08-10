@@ -26,7 +26,8 @@ alias h='heroku'
 alias hrun='h local:run'
 
 # Git stuff
-alias gfr='git fetch && git rebase -i origin/master'
+alias gfrb='git fetch && git rebase -i origin/master'
+alias gfrs='git fetch --all -p && git reset --hard origin/master'
 alias gl='git log --all --graph --decorate --oneline --first-parent'
 alias gs='git status -sb'
 alias gc='git commit -m'

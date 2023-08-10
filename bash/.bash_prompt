@@ -61,7 +61,7 @@ if $SHELL_BASH; then
     PROMPT_COMMAND=bash_prompt_command
 else
     # Assume zsh
-    function precmd{
+    function precmd {
         bash_prompt_command
     }
 fi
