@@ -3,6 +3,7 @@
     email = elmehdi.baha@gmail.com
 [push]
     default = simple
+    autoSetupRemote = true
 [alias]
     pl = pull
     ps = push
