@@ -14,7 +14,7 @@ echo "||--Symlinks--||"
 . "$DOTFILES_DIR/os/symlinks.sh"
 echo ""
 
-if [ "$(uname)" == "Darwin" ]; then
+if [ "$(uname)" = "Darwin" ]; then
     echo "||--Install apps--||"
     . "$DOTFILES_DIR/os/macos_install.sh"
     echo ""

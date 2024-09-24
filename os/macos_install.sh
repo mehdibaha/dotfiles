@@ -3,10 +3,9 @@
 ###########################
 ##### Config Variables
 ###########################
-BREW_TAPS=(homebrew/cask-drivers heroku/brew)
-BREW_RECIPES=(bash coreutils git git-extras wget mas bat postgresql heroku openssl python trash awscli openjdk@17 postgresql rabbitmq)
-BREW_CASKS=(rectangle firefox docker google-drive visual-studio-code tunnelblick itsycal logitech-options sfdx mongodb-compass)
-MAC_APPS=()
+BREW_TAPS=(homebrew/cask-drivers)
+BREW_RECIPES=(openjdk@21 bash coreutils git git-extras wget bat openssl python trash)
+BREW_CASKS=(rectangle google-drive visual-studio-code tunnelblick itsycal logi-options+ sf postman-agent)
 
 ###########################
 ##### XCode
@@ -73,21 +72,4 @@ if [ -n "$INSTALL_APPS" ]; then
     echo 'Update/Upgrade/Prune Homebrew...'
     { brew update && brew upgrade && brew cleanup --prune=all; } &> /dev/null
 
-    ###########################
-    ##### MacOS Apps
-    ###########################
-    echo ''
-    echo '--MacOS Apps--'
-
-    echo 'Install MacOS Apps...'
-    current_apps=$(mas list)
-    for app in "${MAC_APPS[@]}"; do
-        if [[ ! "$(echo $current_apps | grep -i $app)" ]]; then
-            echo "    Install $app..."
-            mas install $app &> /dev/null
-        fi
-    done
-
-    echo 'Upgrade MacOS apps...'
-    mas upgrade &> /dev/null
 fi
