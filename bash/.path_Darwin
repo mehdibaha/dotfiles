@@ -4,3 +4,10 @@ export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"; # core-utils
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
 export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
 export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
+
+export TFENV_AUTO_INSTALL=true
+export TFENV_TERRAFORM_DEFAULT_VERSION=latest-allowed
+export TENV_FORCE_REMOTE=true
+
+source ~/Documents/01_Coding/infra/_scripts/authent_360/authent_360.sh
+alias doctrine-api-get-access-token='sh /Users/mehdib/Documents/01_Coding/infra/_scripts/authent_360/authent_doctrine_api.sh'

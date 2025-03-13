@@ -23,3 +23,23 @@ function reload_audio() {
     sudo kextunload /System/Library/Extensions/AppleHDA.kext
     sudo kextload /System/Library/Extensions/AppleHDA.kext
 }
+
+gps() {
+  if [ -z "$1" ] || [ -z "$2" ]; then
+    echo "Usage: gps <branch-name> <commit-message>"
+    return 1
+  fi
+
+  local target_branch="$1"
+  local commit_message="$2"
+
+  git add .
+  gc "$commit_message"
+  git push origin master:"$target_branch"
+
+  if [ $? -eq 0 ]; then
+    gh pr create --base master --head "$target_branch" --title "$commit_message" --body ""
+  else
+    echo "Push failed, not creating a pull request."
+  fi
+}

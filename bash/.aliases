@@ -42,3 +42,6 @@ alias sudo='sudo '
 # Docker stuff
 alias res='docker-compose stop && docker-compose up -d'
 alias log='docker-compose logs --tail 10 -f web'
+
+# Jupyter
+alias jup='jupyter notebook'

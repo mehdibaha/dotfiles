@@ -5,7 +5,7 @@
 ###########################
 BREW_TAPS=(homebrew/cask-drivers)
 BREW_RECIPES=(openjdk@21 bash coreutils git git-extras wget bat openssl python trash)
-BREW_CASKS=(rectangle google-drive visual-studio-code tunnelblick itsycal logi-options+ sf postman-agent)
+BREW_CASKS=(arc ticktick rectangle google-drive visual-studio-code tunnelblick itsycal logi-options+ sf postman-agent)
 
 ###########################
 ##### XCode
